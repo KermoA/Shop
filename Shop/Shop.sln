@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop", "Shop\Shop.csproj", "{5EA42951-B89F-433E-B001-A2581A1F6565}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.ApplicationService", "Shop.ApplicationService\Shop.ApplicationService.csproj", "{6995A41C-E0ED-4D5D-939F-338097BDBA2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.ApplicationServices", "Shop.ApplicationService\Shop.ApplicationServices.csproj", "{6995A41C-E0ED-4D5D-939F-338097BDBA2C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Core", "Shop.Core\Shop.Core.csproj", "{5D852527-515F-4750-8544-1DD714DAF0E7}"
 EndProject
