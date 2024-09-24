@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
 using Shop.Models.Spaceships;
@@ -12,8 +13,8 @@ namespace Shop.Controllers
 
 		public SpaceshipsController
 			(
-			ShopContext context,
-			ISpaceshipsServices spaceshipsServices
+				ShopContext context,
+				ISpaceshipsServices spaceshipsServices
 			)
 		{
 			_context = context;
@@ -41,7 +42,7 @@ namespace Shop.Controllers
 		{
 			var spaceship = await _spaceshipServices.DetailAsync(id);
 
-			if (spaceship == null) 
+			if (spaceship == null)
 			{
 				return View("Error");
 			}
@@ -60,6 +61,57 @@ namespace Shop.Controllers
 
 
 			return View(vm);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Update(Guid id)
+		{
+			var spaceship = await _spaceshipServices.DetailAsync(id);
+
+			if (spaceship == null)
+			{
+				return NotFound();
+			}
+
+			var vm = new SpaceshipCreateUpdateViewModel();
+
+			vm.Id = spaceship.Id;
+			vm.Name = spaceship.Name;
+			vm.Typename = spaceship.Typename;
+			vm.BuiltDate = spaceship.BuiltDate;
+			vm.SpaceshipModel = spaceship.SpaceshipModel;
+			vm.Crew = spaceship.Crew;
+			vm.EnginePower = spaceship.EnginePower;
+			vm.CreatedAt = spaceship.CreatedAt;
+			vm.ModifiedAt = spaceship.ModifiedAt;
+
+			return View("CreateUpdate", vm);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Update(SpaceshipCreateUpdateViewModel vm)
+		{
+			var dto = new SpaceshipDto()
+			{
+				Id = vm.Id,
+				Name = vm.Name,
+				Typename = vm.Typename,
+				SpaceshipModel = vm.SpaceshipModel,
+				BuiltDate = vm.BuiltDate,
+				Crew = vm.Crew,
+				EnginePower = vm.EnginePower,
+				CreatedAt = vm.CreatedAt,
+				ModifiedAt = vm.ModifiedAt,
+			};
+
+			var result = await _spaceshipServices.Update(dto);
+
+			if(result == null)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
+			return RedirectToAction(nameof(Index), vm);
 		}
 	}
 }
