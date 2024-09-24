@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Shop.ApplicationServices.Services;
+using Shop.Core.ServiceInterface;
 using Shop.Data;
 
 namespace Shop
@@ -11,6 +13,8 @@ namespace Shop
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+
+			builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
 
 			builder.Services.AddDbContext<ShopContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
