@@ -4,11 +4,10 @@ using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
 
-
 namespace Shop.ApplicationServices.Services
 {
-	public class SpaceshipsServices : ISpaceshipsServices
-	{
+    public class SpaceshipsServices : ISpaceshipsServices
+    {
 		private readonly ShopContext _context;
 
 		public SpaceshipsServices
@@ -34,10 +33,10 @@ namespace Shop.ApplicationServices.Services
 			domain.Id = dto.Id;
 			domain.Name = dto.Name;
 			domain.Typename = dto.Typename;
-			domain.SpaceshipModel = domain.SpaceshipModel;
+			domain.SpaceshipModel = dto.SpaceshipModel;
 			domain.BuiltDate = dto.BuiltDate;
-			domain.Crew	= dto.Crew;
-			domain.EnginePower	= dto.EnginePower;
+			domain.Crew = dto.Crew;
+			domain.EnginePower = dto.EnginePower;
 			domain.CreatedAt = dto.CreatedAt;
 			domain.ModifiedAt = DateTime.Now;
 
@@ -47,16 +46,15 @@ namespace Shop.ApplicationServices.Services
 			return domain;
 		}
 
-		public async Task<Spaceship> Delete(Guid id)
-		{
-			var spaceship = await _context.Spaceships
-				.FirstOrDefaultAsync ( x => x.Id == id );
+        public async Task<Spaceship> Delete(Guid id)
+        {
+            var spaceship = await _context.Spaceships
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-			_context.Spaceships.Remove( spaceship );
-			await _context.SaveChangesAsync();
+            _context.Spaceships.Remove(spaceship);
+            await _context.SaveChangesAsync();
 
-			return spaceship;
-		}
-
-	}
+            return spaceship;
+        }
+    }
 }
