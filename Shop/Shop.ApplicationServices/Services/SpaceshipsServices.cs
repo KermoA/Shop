@@ -6,7 +6,7 @@ using Shop.Data;
 
 namespace Shop.ApplicationServices.Services
 {
-    public class SpaceshipsServices : ISpaceshipsServices
+    public class SpaceshipsServices : ISpaceshipServices
     {
 		private readonly ShopContext _context;
 
