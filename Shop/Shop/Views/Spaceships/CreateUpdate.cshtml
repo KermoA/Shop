@@ -59,14 +59,12 @@ else
 
         @if (Model.Id.HasValue)
         {
-			<input asp-action="update" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Update" />
+            <input asp-action="update" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Update" />
         }
         else
         {
             <input asp-action="create" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Create" />
         }
-
-        
 
     </form>
 </div>

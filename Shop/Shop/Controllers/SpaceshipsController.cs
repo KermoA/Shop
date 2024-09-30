@@ -9,12 +9,12 @@ namespace Shop.Controllers
     public class SpaceshipsController : Controller
     {
         public readonly ShopContext _context;
-        private readonly ISpaceshipsServices _spaceshipServices;
+        private readonly ISpaceshipServices _spaceshipServices;
 
         public SpaceshipsController
             (
             ShopContext context,
-            ISpaceshipsServices spaceshipsServices
+            ISpaceshipServices spaceshipsServices
             ) 
         {
             _context = context; 
@@ -58,6 +58,14 @@ namespace Shop.Controllers
                 EnginePower = vm.EnginePower,
                 CreatedAt = vm.CreatedAt,
                 ModifiedAt = vm.ModifiedAt,
+                Files = vm.Files,
+                FileToApiDtos = vm.Image
+                    .Select(x => new FileToApiDto
+                    {
+                        Id = x.ImageId,
+                        ExistingFilePath = x.FilePath,
+                        SpaceshipId = x.SpaceshipId
+                    }).ToArray()
             };
 
             var result = await _spaceshipServices.Create(dto);
@@ -69,6 +77,7 @@ namespace Shop.Controllers
 
             return RedirectToAction(nameof(Index), vm);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
