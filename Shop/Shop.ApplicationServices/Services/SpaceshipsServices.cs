@@ -18,6 +18,27 @@ namespace Shop.ApplicationServices.Services
 			_context = context;
 		}
 
+		public async Task<Spaceship> Create(SpaceshipDto dto)
+		{
+			Spaceship spaceship = new Spaceship();
+
+			spaceship.Id = Guid.NewGuid();
+			spaceship.Name = dto.Name;
+			spaceship.Typename = dto.Typename;
+			spaceship.SpaceshipModel = dto.SpaceshipModel;
+			spaceship.BuiltDate = dto.BuiltDate;
+			spaceship.Crew = dto.Crew;
+			spaceship.EnginePower = dto.EnginePower;
+			spaceship.CreatedAt = DateTime.Now;
+			spaceship.ModifiedAt = DateTime.Now;
+
+			await _context.Spaceships.AddAsync( spaceship );
+			await _context.SaveChangesAsync();
+
+			return spaceship;
+
+		}
+
 		public async Task<Spaceship> DetailAsync(Guid id)
 		{
 			var result = await _context.Spaceships

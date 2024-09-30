@@ -37,6 +37,40 @@ namespace Shop.Controllers
         }
 
         [HttpGet]
+        public IActionResult Create()
+        {
+            SpaceshipCreateUpdateViewModel result = new();
+
+            return View("CreateUpdate", result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(SpaceshipCreateUpdateViewModel vm)
+        {
+            var dto = new SpaceshipDto()
+            {
+                Id = vm.Id,
+                Name = vm.Name,
+                Typename = vm.Typename,
+                SpaceshipModel = vm.SpaceshipModel,
+                BuiltDate = vm.BuiltDate,
+                Crew = vm.Crew,
+                EnginePower = vm.EnginePower,
+                CreatedAt = vm.CreatedAt,
+                ModifiedAt = vm.ModifiedAt,
+            };
+
+            var result = await _spaceshipServices.Create(dto);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index), vm);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
             var spaceship = await _spaceshipServices.DetailAsync(id);

@@ -8,7 +8,7 @@ namespace Shop.Core.Domain
 {
     public class Spaceship
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         public string Name { get; set; }
         public string Typename { get; set; }
         public string SpaceshipModel { get; set; }
