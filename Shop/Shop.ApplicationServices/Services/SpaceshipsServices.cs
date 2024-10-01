@@ -6,17 +6,20 @@ using Shop.Data;
 
 namespace Shop.ApplicationServices.Services
 {
-    public class SpaceshipsServices : ISpaceshipServices
+    public class SpaceshipsServices : ISpaceshipsServices
     {
 		private readonly ShopContext _context;
+        private readonly IFileServices _fileServices;
 
-		public SpaceshipsServices
+        public SpaceshipsServices
 			(
-			ShopContext context
-			)
+			ShopContext context,
+            IFileServices fileServices
+            )
 		{
 			_context = context;
-		}
+            _fileServices = fileServices;
+        }
 
 		public async Task<Spaceship> Create(SpaceshipDto dto)
 		{
@@ -60,6 +63,7 @@ namespace Shop.ApplicationServices.Services
 			domain.EnginePower = dto.EnginePower;
 			domain.CreatedAt = dto.CreatedAt;
 			domain.ModifiedAt = DateTime.Now;
+			_fileServices.FilesToApi(dto, domain);
 
 			_context.Spaceships.Update(domain);
 			await _context.SaveChangesAsync();
@@ -72,6 +76,16 @@ namespace Shop.ApplicationServices.Services
             var spaceship = await _context.Spaceships
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+			var images = await _context.FileToApis
+				.Where(x => x.SpaceshipId == id)
+				.Select(y => new FileToApi
+				{
+					Id = y.Id,
+					SpaceshipId = y.SpaceshipId,
+					ExistingFilePath = y.ExistingFilePath
+				}).ToArrayAsync();
+
+			await _fileServices.RemoveImagesFromApi(images);
             _context.Spaceships.Remove(spaceship);
             await _context.SaveChangesAsync();
 

@@ -3,7 +3,7 @@ using Shop.Core.Dto;
 
 namespace Shop.Core.ServiceInterface
 {
-	public interface ISpaceshipServices
+	public interface ISpaceshipsServices
 	{
 		Task<Spaceship> DetailAsync(Guid id);
 		Task<Spaceship> Update(SpaceshipDto dto);

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Shop.ApplicationServices.Services;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
@@ -14,7 +15,8 @@ namespace Shop
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
 
-			builder.Services.AddScoped<ISpaceshipServices, SpaceshipsServices>();
+			builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
+			builder.Services.AddScoped<IFileServices, FileServices>();
 
 			builder.Services.AddDbContext<ShopContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -32,6 +34,13 @@ namespace Shop
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
+
+			app.UseStaticFiles(new StaticFileOptions()
+			{
+				FileProvider = new PhysicalFileProvider
+				(Path.Combine(builder.Environment.ContentRootPath, "multipleFileUpload")),
+				RequestPath = "/multipleFileUpload"
+			});
 
 			app.UseRouting();
 
