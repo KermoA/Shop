@@ -1,6 +1,5 @@
 ﻿using Shop.Core.Domain;
 using Shop.Core.Dto;
-using System.Threading.Tasks;
 
 namespace Shop.Core.ServiceInterface
 {

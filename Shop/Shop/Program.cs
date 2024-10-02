@@ -3,8 +3,11 @@ using Microsoft.Extensions.FileProviders;
 using Shop.ApplicationServices.Services;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
+using ShopTARge23.ApplicationServices.Services;
 
-namespace Shop
+
+
+namespace ShopTARge23
 {
 	public class Program
 	{
@@ -35,7 +38,7 @@ namespace Shop
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
-			app.UseStaticFiles(new StaticFileOptions()
+			app.UseStaticFiles(new StaticFileOptions
 			{
 				FileProvider = new PhysicalFileProvider
 				(Path.Combine(builder.Environment.ContentRootPath, "multipleFileUpload")),
