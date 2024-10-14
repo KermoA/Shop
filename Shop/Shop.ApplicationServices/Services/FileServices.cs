@@ -6,7 +6,6 @@ using Shop.Core.ServiceInterface;
 using Shop.Data;
 
 
-
 namespace Shop.ApplicationServices.Services
 {
 	public class FileServices : IFileServices
@@ -24,8 +23,7 @@ namespace Shop.ApplicationServices.Services
 			_context = context;
 		}
 
-
-		public void FilesToApi(SpaceshipDto dto, Spaceship spaceship)
+		public async void FilesToApi(SpaceshipDto dto, Spaceship spaceship)
 		{
 			if (!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
 			{
@@ -56,10 +54,10 @@ namespace Shop.ApplicationServices.Services
 
 		public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dtos)
 		{
-			foreach (var dto in dtos)
+			foreach (var dtosItem in dtos)
 			{
 				var imageId = await _context.FileToApis
-					.FirstOrDefaultAsync(x => x.ExistingFilePath == dto.ExistingFilePath);
+					.FirstOrDefaultAsync(x => x.ExistingFilePath == dtosItem.ExistingFilePath);
 
 				var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
 					+ imageId.ExistingFilePath;
@@ -74,6 +72,30 @@ namespace Shop.ApplicationServices.Services
 			}
 
 			return null;
+		}
+
+		public void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain)
+		{
+			if (dto.Files != null && dto.Files.Count > 0)
+			{
+				foreach (var image in dto.Files)
+				{
+					using (var target = new MemoryStream())
+					{
+						FileToDatabase files = new FileToDatabase()
+						{
+							Id = Guid.NewGuid(),
+							ImageTitle = image.FileName,
+							RealEstateId = domain.Id
+						};
+
+						image.CopyTo(target);
+						files.ImageData = target.ToArray();
+
+						_context.FileToDatabases.Add(files);
+					}
+				}
+			}
 		}
 	}
 }

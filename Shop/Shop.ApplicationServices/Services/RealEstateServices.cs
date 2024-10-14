@@ -6,69 +6,78 @@ using Shop.Data;
 
 namespace Shop.ApplicationServices.Services
 {
-    public class RealEstateServices : IRealEstateServices
-    {
-        private readonly ShopContext _context;
+	public class RealEstateServices : IRealEstateServices
+	{
+		private readonly ShopContext _context;
+		private readonly IFileServices _fileServices;
 
-        public RealEstateServices
-            (
-                ShopContext context
-            )
-        {
-            _context = context;
-        }
+		public RealEstateServices
+			(
+				ShopContext context,
+				IFileServices fileServices
 
-        public async Task<RealEstate> Create(RealEstateDto dto)
-        {
-            RealEstate realEstate = new();
+			)
+		{
+			_context = context;
+			_fileServices = fileServices;
+		}
 
-            realEstate.Id = Guid.NewGuid();
-            realEstate.Size = dto.Size;
-            realEstate.Location = dto.Location;
-            realEstate.RoomNumber = dto.RoomNumber;
-            realEstate.BuildingType = dto.BuildingType;
-            realEstate.CreatedAt = DateTime.Now;
-            realEstate.ModifiedAt = DateTime.Now;
+		public async Task<RealEstate> Create(RealEstateDto dto)
+		{
+			RealEstate realEstate = new();
 
-            await _context.RealEstates.AddAsync(realEstate);
-            await _context.SaveChangesAsync();
+			realEstate.Id = Guid.NewGuid();
+			realEstate.Size = dto.Size;
+			realEstate.Location = dto.Location;
+			realEstate.RoomNumber = dto.RoomNumber;
+			realEstate.BuildingType = dto.BuildingType;
+			realEstate.CreatedAt = DateTime.Now;
+			realEstate.ModifiedAt = DateTime.Now;
 
-            return realEstate;
-        }
+			if (dto.Files != null)
+			{
+				_fileServices.UploadFilesToDatabase(dto, realEstate);
+			}
 
-        public async Task<RealEstate> GetAsync(Guid id)
-        {
-            var result = await _context.RealEstates
-                .FirstOrDefaultAsync(x => x.Id == id);
+			await _context.RealEstates.AddAsync(realEstate);
+			await _context.SaveChangesAsync();
 
-            return result;
-        }
+			return realEstate;
+		}
 
-        public async Task<RealEstate> Update(RealEstateDto dto)
-        {
-            RealEstate domain = new();
+		public async Task<RealEstate> GetAsync(Guid id)
+		{
+			var result = await _context.RealEstates
+				.FirstOrDefaultAsync(x => x.Id == id);
 
-            domain.Id = dto.Id;
-            domain.Size = dto.Size;
-            domain.Location = dto.Location;
-            domain.RoomNumber = dto.RoomNumber;
-            domain.BuildingType = dto.BuildingType;
-            domain.CreatedAt = dto.CreatedAt;
-            domain.ModifiedAt = DateTime.Now;
+			return result;
+		}
 
-            _context.RealEstates.Update(domain);
-            await _context.SaveChangesAsync();
+		public async Task<RealEstate> Update(RealEstateDto dto)
+		{
+			RealEstate domain = new();
 
-            return domain;
-        }
+			domain.Id = dto.Id;
+			domain.Size = dto.Size;
+			domain.Location = dto.Location;
+			domain.RoomNumber = dto.RoomNumber;
+			domain.BuildingType = dto.BuildingType;
+			domain.CreatedAt = dto.CreatedAt;
+			domain.ModifiedAt = DateTime.Now;
 
-        public async Task<RealEstate> Delete(Guid id)
-        {
-            var realEstate = await _context.RealEstates
-                .FirstOrDefaultAsync(x => x.Id == id);
-            _context.RealEstates.Remove(realEstate);
-            await _context.SaveChangesAsync();
-            return realEstate;
-        }
-    }
+			_context.RealEstates.Update(domain);
+			await _context.SaveChangesAsync();
+
+			return domain;
+		}
+
+		public async Task<RealEstate> Delete(Guid id)
+		{
+			var realEstate = await _context.RealEstates
+				.FirstOrDefaultAsync(x => x.Id == id);
+			_context.RealEstates.Remove(realEstate);
+			await _context.SaveChangesAsync();
+			return realEstate;
+		}
+	}
 }
