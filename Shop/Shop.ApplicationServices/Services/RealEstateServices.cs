@@ -61,5 +61,14 @@ namespace Shop.ApplicationServices.Services
 
             return domain;
         }
+
+        public async Task<RealEstate> Delete(Guid id)
+        {
+            var realEstate = await _context.RealEstates
+                .FirstOrDefaultAsync(x => x.Id == id);
+            _context.RealEstates.Remove(realEstate);
+            await _context.SaveChangesAsync();
+            return realEstate;
+        }
     }
 }

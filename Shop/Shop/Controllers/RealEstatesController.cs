@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.ApplicationServices.Services;
+using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
@@ -136,6 +137,36 @@ namespace Shop.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index), vm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var realEstates = await _realEstateServices.GetAsync(id);
+
+            if (realEstates == null)
+            {
+                return NotFound();
+            }
+            var vm = new RealEstateDeleteViewModel();
+            vm.Id = realEstates.Id;
+            vm.Size = realEstates.Size;
+            vm.Location = realEstates.Location;
+            vm.RoomNumber = realEstates.RoomNumber;
+            vm.BuildingType = realEstates.BuildingType;
+            vm.CreatedAt = realEstates.CreatedAt;
+            vm.ModifiedAt = realEstates.ModifiedAt;
+            return View(vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var realEstates = await _realEstateServices.Delete(id);
+            if (realEstates == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
