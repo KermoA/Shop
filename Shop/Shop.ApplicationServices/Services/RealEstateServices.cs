@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
@@ -65,6 +66,11 @@ namespace Shop.ApplicationServices.Services
 			domain.CreatedAt = dto.CreatedAt;
 			domain.ModifiedAt = DateTime.Now;
 
+			if (dto.Files != null)
+			{
+				_fileServices.UploadFilesToDatabase(dto, domain);
+			}
+
 			_context.RealEstates.Update(domain);
 			await _context.SaveChangesAsync();
 
@@ -75,8 +81,20 @@ namespace Shop.ApplicationServices.Services
 		{
 			var realEstate = await _context.RealEstates
 				.FirstOrDefaultAsync(x => x.Id == id);
+
+			var images = await _context.FileToDatabases
+				.Where(x => x.RealEstateId == id)
+				.Select(y => new FileToDatabaseDto
+				{
+					Id = y.Id,
+					ImageTitle = y.ImageTitle,
+					realEstateId = y.RealEstateId
+				}).ToArrayAsync();
+
+			await _fileServices.RemoveImagesFromDatabase(images);
 			_context.RealEstates.Remove(realEstate);
 			await _context.SaveChangesAsync();
+
 			return realEstate;
 		}
 	}
