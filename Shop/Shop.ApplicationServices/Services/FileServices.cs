@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Hosting;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
@@ -74,6 +75,26 @@ namespace Shop.ApplicationServices.Services
 				_context.FileToApis.Remove(imageId);
 				await _context.SaveChangesAsync();
 			}
+
+			return null;
+		}
+
+		public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
+		{
+
+				var imageId = await _context.FileToApis
+					.FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+				var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
+					+ imageId.ExistingFilePath;
+
+				if (File.Exists(filePath))
+				{
+					File.Delete(filePath);
+				}
+
+				_context.FileToApis.Remove(imageId);
+				await _context.SaveChangesAsync();
 
 			return null;
 		}
