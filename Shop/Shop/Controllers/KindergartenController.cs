@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
 using Shop.Models.Kindergartens;
+using Shop.Models.RealEstates;
 
 namespace KindergartenProject.Controllers
 {
@@ -10,16 +12,19 @@ namespace KindergartenProject.Controllers
 	{
 		private readonly ShopContext _context;
 		private readonly IKindergartensServices _kindergartenServices;
+        private readonly IFileServices _fileServices;
 
-		public KindergartensController
+        public KindergartensController
 			(
 				ShopContext context,
-				IKindergartensServices kindergartensServices
-			)
+				IKindergartensServices kindergartensServices,
+                IFileServices fileServices
+            )
 		{
 			_context = context;
 			_kindergartenServices = kindergartensServices;
-		}
+            _fileServices = fileServices;
+        }
 		public IActionResult Index()
 		{
 			var result = _context.Kindergartens
@@ -55,7 +60,16 @@ namespace KindergartenProject.Controllers
 				Teacher = vm.Teacher,
 				CreatedAt = vm.CreatedAt,
 				UpdatedAt = vm.UpdatedAt,
-			};
+                Files = vm.Files,
+                Image = vm.Image
+                    .Select(x => new KindergartenFileToDatabaseDto
+                    {
+                        Id = x.ImageId,
+                        ImageData = x.ImageData,
+                        ImageTitle = x.ImageTitle,
+                        KindergartenId = x.KindergartenId
+                    }).ToArray()
+            };
 
 			var result = await _kindergartenServices.Create(dto);
 
@@ -77,7 +91,18 @@ namespace KindergartenProject.Controllers
 				return NotFound();
 			}
 
-			var vm = new KindergartenDetailsViewModel();
+            var photos = await _context.KindergartenFileToDatabases
+                .Where(x => x.KindergartenId == id)
+                .Select(y => new KindergartenImageViewModel
+                {
+                    KindergartenId = y.Id,
+                    ImageId = y.Id,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+
+            var vm = new KindergartenDetailsViewModel();
 
 			vm.Id = kindergarten.Id;
 			vm.GroupName = kindergarten.GroupName;
@@ -86,8 +111,9 @@ namespace KindergartenProject.Controllers
 			vm.Teacher = kindergarten.Teacher;
 			vm.CreatedAt = kindergarten.CreatedAt;
 			vm.UpdatedAt = kindergarten.UpdatedAt;
+            vm.Image.AddRange(photos);
 
-			return View(vm);
+            return View(vm);
 
 		}
 
@@ -101,7 +127,18 @@ namespace KindergartenProject.Controllers
 				return NotFound();
 			}
 
-			var vm = new KindergartenCreateUpdateViewModel();
+            var photos = await _context.KindergartenFileToDatabases
+				.Where(x => x.KindergartenId == id)
+				.Select(y => new KindergartenImageViewModel
+				{
+					KindergartenId = y.Id,
+					ImageId = y.Id,
+					ImageData = y.ImageData,
+					ImageTitle = y.ImageTitle,
+					Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+				}).ToArrayAsync();
+
+            var vm = new KindergartenCreateUpdateViewModel();
 
 			vm.Id = kindergarten.Id;
 			vm.GroupName = kindergarten.GroupName;
@@ -110,8 +147,9 @@ namespace KindergartenProject.Controllers
 			vm.Teacher = kindergarten.Teacher;
 			vm.CreatedAt = kindergarten.CreatedAt;
 			vm.UpdatedAt = kindergarten.UpdatedAt;
+            vm.Image.AddRange(photos);
 
-			return View("CreateUpdate", vm);
+            return View("CreateUpdate", vm);
 		}
 
 		[HttpPost]
@@ -126,7 +164,16 @@ namespace KindergartenProject.Controllers
 				Teacher = vm.Teacher,
 				CreatedAt = vm.CreatedAt,
 				UpdatedAt = vm.UpdatedAt,
-			};
+                Files = vm.Files,
+                Image = vm.Image
+                    .Select(x => new KindergartenFileToDatabaseDto
+                    {
+                        Id = x.ImageId,
+                        ImageData = x.ImageData,
+                        ImageTitle = x.ImageTitle,
+                        KindergartenId = x.KindergartenId,
+                    }).ToArray()
+            };
 
 			var result = await _kindergartenServices.Update(dto);
 
@@ -148,7 +195,18 @@ namespace KindergartenProject.Controllers
 				return NotFound();
 			}
 
-			var vm = new KindergartenDeleteViewModel();
+            var photos = await _context.KindergartenFileToDatabases
+               .Where(x => x.KindergartenId == id)
+               .Select(y => new KindergartenImageViewModel
+               {
+                   KindergartenId = y.Id,
+                   ImageId = y.Id,
+                   ImageData = y.ImageData,
+                   ImageTitle = y.ImageTitle,
+                   Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+               }).ToArrayAsync();
+
+            var vm = new KindergartenDeleteViewModel();
 
 			vm.Id = id;
 			vm.GroupName = kindergarten.GroupName;
@@ -157,8 +215,9 @@ namespace KindergartenProject.Controllers
 			vm.Teacher = kindergarten.Teacher;
 			vm.CreatedAt = kindergarten.CreatedAt;
 			vm.UpdatedAt = kindergarten.UpdatedAt;
+            vm.Image.AddRange(photos);
 
-			return View(vm);
+            return View(vm);
 		}
 
 		[HttpPost]
@@ -173,5 +232,22 @@ namespace KindergartenProject.Controllers
 
 			return RedirectToAction(nameof(Index));
 		}
-	}
+
+        public async Task<IActionResult> RemoveKindergartenImage(KindergartenImageViewModel vm)
+        {
+            var dto = new KindergartenFileToDatabaseDto()
+            {
+                Id = vm.ImageId
+            };
+
+            var image = await _fileServices.RemoveKindergartenImageFromDatabase(dto);
+
+            if (image == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }

@@ -149,5 +149,56 @@ namespace Shop.ApplicationServices.Services
 
 			return null;
 		}
-	}
+
+        public void UploadKindergartenFilesToDatabase(KindergartenDto dto, Kindergarten domain)
+        {
+            if (dto.Files != null && dto.Files.Count > 0)
+            {
+                foreach (var image in dto.Files)
+                {
+                    using (var target = new MemoryStream())
+                    {
+                        KindergartenFileToDatabase files = new KindergartenFileToDatabase()
+                        {
+                            Id = Guid.NewGuid(),
+                            ImageTitle = image.FileName,
+                            KindergartenId = domain.Id
+                        };
+
+                        image.CopyTo(target);
+                        files.ImageData = target.ToArray();
+
+                        _context.KindergartenFileToDatabases.Add(files);
+                    }
+                }
+            }
+        }
+
+        public async Task<KindergartenFileToDatabase> RemoveKindergartenImageFromDatabase(KindergartenFileToDatabaseDto dto)
+        {
+            var image = await _context.KindergartenFileToDatabases
+                .Where(x => x.Id == dto.Id)
+                .FirstOrDefaultAsync();
+
+            _context.KindergartenFileToDatabases.Remove(image);
+            await _context.SaveChangesAsync();
+
+            return image;
+        }
+
+        public async Task<KindergartenFileToDatabase> RemoveKindergartenImagesFromDatabase(KindergartenFileToDatabaseDto[] dtos)
+        {
+            foreach (var dto in dtos)
+            {
+                var image = await _context.KindergartenFileToDatabases
+                    .Where(x => x.Id == dto.Id)
+                    .FirstOrDefaultAsync();
+
+                _context.KindergartenFileToDatabases.Remove(image);
+                await _context.SaveChangesAsync();
+            }
+
+            return null;
+        }
+    }
 }
