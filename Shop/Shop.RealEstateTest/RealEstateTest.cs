@@ -26,5 +26,19 @@ namespace Shop.RealEstateTest
 
 
         }
+
+        [Fact]
+        public async Task ShouldNot_GetByIdRealEstate_WhenReturnsNotEqual()
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+
+
+        }
     }
 }
