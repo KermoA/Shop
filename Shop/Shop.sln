@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Core", "Shop.Core\Shop
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Data", "Shop.Data\Shop.Data.csproj", "{8BE41F72-4FE2-4A66-AE44-7FF0A67A8D89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.RealEstateTest", "Shop.RealEstateTest\Shop.RealEstateTest.csproj", "{A98020C8-470A-43E0-A7CE-2EE5671B47EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.RealEstateTest", "Shop.RealEstateTest\Shop.RealEstateTest.csproj", "{A98020C8-470A-43E0-A7CE-2EE5671B47EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.KindergartenTest", "Shop.KindergartenTest\Shop.KindergartenTest.csproj", "{4F2D5E85-A519-4532-A063-241495CA89B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A98020C8-470A-43E0-A7CE-2EE5671B47EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A98020C8-470A-43E0-A7CE-2EE5671B47EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A98020C8-470A-43E0-A7CE-2EE5671B47EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F2D5E85-A519-4532-A063-241495CA89B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F2D5E85-A519-4532-A063-241495CA89B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F2D5E85-A519-4532-A063-241495CA89B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F2D5E85-A519-4532-A063-241495CA89B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
