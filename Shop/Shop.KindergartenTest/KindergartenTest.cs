@@ -1,7 +1,5 @@
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
-using System;
-using System.Dynamic;
 
 namespace Shop.KindergartenTest
 {
@@ -88,6 +86,7 @@ namespace Shop.KindergartenTest
 			KindergartenDto dto = MockKindergartenData();
 			var kindergarten = await Svc<IKindergartensServices>().Create(dto);
 
+			//Act
 			var createdKindergarten = await Svc<IKindergartensServices>().DetailAsync((Guid)kindergarten.Id);
 
 			Assert.NotNull(createdKindergarten);
@@ -95,6 +94,7 @@ namespace Shop.KindergartenTest
 			var result = await Svc<IKindergartensServices>().Delete((Guid)kindergarten.Id);
 			var deletedKindergarten = await Svc<IKindergartensServices>().DetailAsync((Guid)kindergarten.Id);
 
+			//Assert
 			Assert.Null(deletedKindergarten);
 			Assert.NotNull(result);
 		}
