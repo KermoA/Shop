@@ -97,5 +97,10 @@ namespace Shop.ApplicationServices.Services
 
 			return realEstate;
 		}
-	}
+
+        public IEnumerable<RealEstate> GetAll()
+        {
+            return _context.RealEstates.ToList();
+        }
+    }
 }

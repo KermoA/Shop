@@ -9,5 +9,6 @@ namespace Shop.Core.ServiceInterface
 		Task<Kindergarten> Update(KindergartenDto dto);
 		Task<Kindergarten> Delete(Guid id);
 		Task<Kindergarten> Create(KindergartenDto dto);
-	}
+        IEnumerable<Kindergarten> GetAll();
+    }
 }

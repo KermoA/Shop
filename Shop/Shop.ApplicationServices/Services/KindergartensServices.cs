@@ -96,5 +96,10 @@ namespace Shop.ApplicationServices.Services
 
 			return kindergarten;
 		}
-	}
+
+        public IEnumerable<Kindergarten> GetAll()
+        {
+            return _context.Kindergartens.ToList();
+        }
+    }
 }

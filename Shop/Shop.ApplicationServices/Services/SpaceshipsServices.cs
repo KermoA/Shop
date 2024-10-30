@@ -94,5 +94,9 @@ namespace ShopTARge23.ApplicationServices.Services
 			return spaceship;
 		}
 
-	}
+        public IEnumerable<Spaceship> GetAll()
+        {
+            return _context.Spaceships.ToList();
+        }
+    }
 }
