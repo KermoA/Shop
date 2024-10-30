@@ -200,5 +200,20 @@ namespace Shop.ApplicationServices.Services
 
             return null;
         }
+
+        public List<FileToApi> GetFileToApis()
+        {
+            return _context.FileToApis.ToList();
+        }
+
+        public List<KindergartenFileToDatabase> GetKindergartenFiles()
+        {
+            return _context.KindergartenFileToDatabases.ToList();
+        }
+
+        public List<FileToDatabase> GetRealEstateFiles()
+        {
+            return _context.FileToDatabases.ToList();
+        }
     }
 }

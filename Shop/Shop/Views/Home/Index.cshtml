@@ -3,91 +3,75 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4 text-white text-uppercase">Latest Updates</h1>
 </div>
 
 @model HomePageViewModel
 
 <div class="container mt-4">
-    <h2 class="text-white">Spaceships</h2>
-    <div id="spaceshipsCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            @for (int i = 0; i < Model.Spaceships.Count(); i++)
+    <!-- Spaceships Cards -->
+    <div class="container card p-3" style="background-color: rgba(255, 255, 255, 0.1);">
+        <h2 class="text-white text-center">Spaceships</h2>
+        <div class="row">
+            @foreach (var spaceship in Model.Spaceships.OrderByDescending(s => s.ModifiedAt).Take(4))
             {
-                var spaceship = Model.Spaceships.ElementAt(i);
-                <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <div class="card text-center mx-auto" style="max-width: 300px;">
+                var imagePath = Model.FileToApis.FirstOrDefault(f => f.SpaceshipId == spaceship.Id)?.ExistingFilePath;
+                <div class="col-md-3">
+                    <div class="card" style="background-image: url('../../multipleFileUpload/@imagePath'); height: 18.75rem; background-size: cover; background-position: center;">
                         <div class="card-body">
-                            <h5 class="card-title">@spaceship.Name</h5>
+                            <h4 class="card-title">@spaceship.Name</h4>
                             <p class="card-text">@spaceship.SpaceshipModel</p>
+                            <p class="card-text"><small class="text-muted">Updated at: @spaceship.ModifiedAt</small></p>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#spaceshipsCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#spaceshipsCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
 
-    <h2 class="text-white mt-4">Kindergartens</h2>
-    <div id="kindergartensCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            @for (int i = 0; i < Model.Kindergartens.Count(); i++)
+    <!-- Kindergartens Cards -->
+    <div class="container card p-3 mt-4" style="background-color: rgba(255, 255, 255, 0.1);">
+        <h2 class="text-white text-center">Kindergartens</h2>
+        <div class="row">
+            @foreach (var kindergarten in Model.Kindergartens.OrderByDescending(k => k.UpdatedAt).Take(4))
             {
-                var kindergarten = Model.Kindergartens.ElementAt(i);
-                <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <div class="card text-center mx-auto" style="max-width: 300px;">
+                var image = Model.KindergartenImages.FirstOrDefault(i => i.KindergartenId == kindergarten.Id);
+                string imageUrl = image != null && image.ImageData != null
+                ? $"data:image/jpeg;base64,{Convert.ToBase64String(image.ImageData)}"
+                : null;
+                <div class="col-md-3">
+                    <div class="card" style="background-image: url('@imageUrl');  height: 18.75rem; background-size: cover; background-position: center;">
                         <div class="card-body">
-                            <h5 class="card-title">@kindergarten.KindergartenName</h5>
+                            <h4 class="card-title">@kindergarten.KindergartenName</h4>
                             <p class="card-text">@kindergarten.GroupName</p>
+                            <p class="card-text"><small class="text-muted">Updated at: @kindergarten.UpdatedAt</small></p>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#kindergartensCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#kindergartensCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
 
-    <h2 class="text-white mt-4">Real Estates</h2>
-    <div id="realEstatesCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            @for (int i = 0; i < Model.RealEstates.Count(); i++)
+    <!-- Real Estates Cards -->
+    <div class="container card p-3 mt-4" style="background-color: rgba(255, 255, 255, 0.1);">
+        <h2 class="text-white text-center">Real Estates</h2>
+        <div class="row">
+            @foreach (var realEstate in Model.RealEstates.OrderByDescending(r => r.ModifiedAt).Take(4))
             {
-                var realEstate = Model.RealEstates.ElementAt(i);
-                <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <div class="card text-center mx-auto" style="max-width: 300px;">
+                var image = Model.RealEstateImages.FirstOrDefault(i => i.RealEstateId == realEstate.Id);
+                string imageUrl = image != null && image.ImageData != null
+                ? $"data:image/jpeg;base64,{Convert.ToBase64String(image.ImageData)}"
+                : null;
+                <div class="col-md-3">
+                    <div class="card" style="background-image: url('@imageUrl');  height: 18.75rem; background-size: cover; background-position: center;">
                         <div class="card-body">
-                            <h5 class="card-title">@realEstate.Size</h5>
-                            <p class="card-text">@realEstate.Location</p>
+                            <h4 class="card-title">@realEstate.Location</h4>
+                            <p class="card-text">@realEstate.BuildingType</p>
+                            <p class="card-text"><small class="text-muted">Updated at: @realEstate.ModifiedAt</small></p>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#realEstatesCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#realEstatesCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
 </div>
-
-
-

@@ -1,7 +1,4 @@
 ﻿using Shop.Core.Domain;
-using Shop.Models.Kindergartens;
-using Shop.Models.RealEstates;
-using Shop.Models.Spaceships;
 
 namespace Shop.Models
 {
@@ -10,5 +7,8 @@ namespace Shop.Models
 		public IEnumerable<Spaceship> Spaceships { get; set; }
 		public IEnumerable<Kindergarten> Kindergartens { get; set; }
 		public IEnumerable<RealEstate> RealEstates { get; set; }
+        public IEnumerable<FileToApi> FileToApis { get; set; }
+        public IEnumerable<KindergartenFileToDatabase> KindergartenImages { get; set; }
+        public IEnumerable<FileToDatabase> RealEstateImages { get; set; }
     }
 }

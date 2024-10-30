@@ -12,19 +12,22 @@ namespace Shop.Controllers
 		private readonly ISpaceshipsServices _spaceshipService;
 		private readonly IKindergartensServices _kindergartenService;
 		private readonly IRealEstateServices _realEstateService;
+        private readonly IFileServices _fileService;
 
 		public HomeController(
             ILogger<HomeController> logger,
 			ISpaceshipsServices spaceshipService,
 			IKindergartensServices kindergartenService,
-			IRealEstateServices realEstateService
-			)
+			IRealEstateServices realEstateService,
+            IFileServices fileService
+            )
         {
             _logger = logger;
 			_spaceshipService = spaceshipService;
 			_kindergartenService = kindergartenService;
 			_realEstateService = realEstateService;
-		}
+            _fileService = fileService;
+        }
 
 		public IActionResult Index()
 		{
@@ -33,6 +36,9 @@ namespace Shop.Controllers
 				Spaceships = _spaceshipService.GetAll(),
 				Kindergartens = _kindergartenService.GetAll(),
 				RealEstates = _realEstateService.GetAll(),
+                FileToApis = _fileService.GetFileToApis(),
+                KindergartenImages = _fileService.GetKindergartenFiles(),
+                RealEstateImages = _fileService.GetRealEstateFiles()
             };
 
 			return View(viewModel);
