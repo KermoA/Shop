@@ -1,20 +1,11 @@
 ﻿@model Shop.Models.Kindergartens.KindergartenImageViewModel
 
 @{
-    bool showRemoveButton = ViewData["ShowRemoveButton"] as bool? ?? false;
     var photoPaths = Model.Image;
 }
 
 <div class="col-sm-3 mt-3">
     <div class="image-container position-relative">
         <img class="card-image-top img-fluid" src="@photoPaths" asp-append-version="true" />
-        @if (showRemoveButton)
-        {
-            <div class="overlay">
-                <form method="post" class="d-inline">
-                    <input asp-action="removeKindergartenImage" asp-controller="kindergartens" asp-route-imageId="@Model.ImageId" type="submit" class="btn btn-danger btn-sm" value="Remove" />
-                </form>
-            </div>
-        }
     </div>
 </div>

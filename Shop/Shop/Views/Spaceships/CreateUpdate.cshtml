@@ -12,7 +12,8 @@
         }
     </div>
     <div class="card-body p-2">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" asp-action="@(Model.Id.HasValue ? "Update" : "Create")">
+            @Html.AntiForgeryToken()
             <input asp-for="Id" type="hidden" />
             <input asp-for="CreatedAt" type="hidden" />
             <input asp-for="ModifiedAt" type="hidden" />
@@ -72,12 +73,20 @@
                 <label class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <div class="row">
-                        @{
-                            ViewData["ShowRemoveButton"] = true;
-                        }
-                        @foreach (var images in Model.Image)
+                        @foreach (var image in Model.Image)
                         {
-                            <partial name="_Images" model="images" />
+                            <div class="col-sm-3 mt-3">
+                                <div class="image-container position-relative">
+                                    <img class="card-image-top img-fluid" src="~/multipleFileUpload/@(image.FilePath ?? "noimage.jpg")" />
+
+                                    @if (Model.Id.HasValue)
+                                    {
+                                        <div class="overlay">
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="removeImage('@image.ImageId')">Remove</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>
@@ -85,16 +94,30 @@
 
             <hr />
 
-            @if (Model.Id.HasValue)
-            {
-                <input asp-action="update" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Update" />
-            }
-            else
-            {
-                <input asp-action="create" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Create" />
-            }
-
+            <input type="submit" class="btn btn-primary" value="@(Model.Id.HasValue ? "Update" : "Create")" />
             <a asp-action="Index" asp-controller="spaceships" class="btn btn-success">Back</a>
         </form>
     </div>
 </div>
+
+<script>
+    function removeImage(imageId) {
+        if (confirm("Are you sure you want to remove this image?")) {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            fetch(`/spaceships/removeImage?imageId=${imageId}`, {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': token,
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert("Failed to remove the image.");
+                }
+            }).catch(error => console.error('Error:', error));
+        }
+    }
+</script>
+

@@ -250,21 +250,23 @@ namespace KindergartenProject.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-        public async Task<IActionResult> RemoveKindergartenImage(KindergartenImageViewModel vm)
+        [HttpPost]
+        public async Task<IActionResult> RemoveKindergartenImage([FromBody] KindergartenImageViewModel vm)
         {
-            var dto = new KindergartenFileToDatabaseDto()
+            if (vm.ImageId == Guid.Empty)
             {
-                Id = vm.ImageId
-            };
-
-            var image = await _fileServices.RemoveKindergartenImageFromDatabase(dto);
-
-            if (image == null)
-            {
-                return RedirectToAction(nameof(Index));
+                return BadRequest("Invalid Image ID.");
             }
 
-            return RedirectToAction(nameof(Index));
+            var dto = new KindergartenFileToDatabaseDto { Id = vm.ImageId };
+            var result = await _fileServices.RemoveKindergartenImageFromDatabase(dto);
+
+            if (result != null)
+            {
+                return Ok();
+            }
+
+            return NotFound();
         }
     }
 }

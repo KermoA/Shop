@@ -245,22 +245,23 @@ namespace Shop.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> RemoveImage(RealEstateImageViewModel vm)
-		{
-			var dto = new FileToDatabaseDto()
-			{
-				Id = vm.ImageId
-			};
+        [HttpPost]
+        public async Task<IActionResult> RemoveImage([FromBody] RealEstateImageViewModel vm)
+        {
+            if (vm.ImageId == Guid.Empty)
+            {
+                return BadRequest("Invalid Image ID.");
+            }
 
-			var image = await _fileServices.RemoveImageFromDatabase(dto);
+            var dto = new FileToDatabaseDto { Id = vm.ImageId };
+            var result = await _fileServices.RemoveImageFromDatabase(dto);
 
-			if (image == null)
-			{
-				return RedirectToAction(nameof(Index));
-			}
+            if (result != null)
+            {
+                return Ok();
+            }
 
-			return RedirectToAction(nameof(Index));
-		}
-	}
+            return NotFound();
+        }
+    }
 }
