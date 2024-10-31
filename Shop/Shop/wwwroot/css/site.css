@@ -97,7 +97,7 @@ body {
 .pagination {
     display: flex;
     justify-content: center;
-    margin: 20px 0; /* Optional: for spacing */
+    margin: 20px 0;
 }
 
 .crud-card {

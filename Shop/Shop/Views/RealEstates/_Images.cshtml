@@ -1,5 +1,16 @@
 ﻿@model Shop.Models.RealEstates.RealEstateImageViewModel
-<div class="form-group row col-sm-4 offset-2">
-	<div>@Model.ImageTitle</div>
-	<img class="card-img-top" src="@Model.Image" asp-append-version="true" />
+
+@{
+    var photoPaths = Model.Image;
+}
+
+<div class="col-sm-3 mt-3">
+    <div class="image-container position-relative">
+        <img class="card-image-top img-fluid" src="@photoPaths" asp-append-version="true" />
+        <div class="overlay">
+            <form method="post" class="d-inline">
+                <input asp-action="removeImage" asp-controller="realEstate" asp-route-imageId="@Model.ImageId" type="submit" class="btn btn-danger btn-sm" value="Remove" />
+            </form>
+        </div>
+    </div>
 </div>
