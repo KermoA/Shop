@@ -1,53 +1,83 @@
 ﻿@model Shop.Models.Kindergartens.KindergartenDetailsViewModel
 
-<h1>Details</h1>
+<div class="card crud-card m-5">
+    <div class="card-header">
+        <h5 class="card-title">Kindergarten Details</h5>
+    </div>
+    <div class="card-body p-2">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card crud-card mb-3">
+                    <div class="card-body">
+                        <dl class="row">
 
-<div>
-	<h4>Kindergartens</h4>
-	<hr />
-	<dl class="row">
-		<div class="form-group row">
-			<label asp-for="Id" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.Id)
-		</div>
+                            <div class="form-group row">
+                                <label asp-for="Id" class="col-sm-4 col-form-label"></label>
+                                <div class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Id)
+                                </div>
+                            </div>
 
-		<div class="form-group row">
-			<label asp-for="GroupName" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.GroupName)
-		</div>
+                            <div class="form-group row">
+                                <label asp-for="GroupName" class="col-sm-4 col-form-label">Group Name</label>
+                                <div class="col-sm-8">
+                                    @Html.DisplayFor(model => model.GroupName)
+                                </div>
+                            </div>
 
-		<div class="form-group row">
-			<label asp-for="ChildrenCount" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.ChildrenCount)
-		</div>
+                            <div class="form-group row">
+                                <label asp-for="ChildrenCount" class="col-sm-4 col-form-label">Children Count</label>
+                                <div class="col-sm-8">
+                                    @Html.DisplayFor(model => model.ChildrenCount)
+                                </div>
+                            </div>
 
-		<div class="form-group row">
-			<label asp-for="KindergartenName" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.KindergartenName)
-		</div>
+                            <div class="form-group row">
+                                <label asp-for="KindergartenName" class="col-sm-4 col-form-label">Kindergarten Name</label>
+                                <div class="col-sm-8">
+                                    @Html.DisplayFor(model => model.KindergartenName)
+                                </div>
+                            </div>
 
-		<div class="form-group row">
-			<label asp-for="Teacher" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.Teacher)
-		</div>
+                            <div class="form-group row">
+                                <label asp-for="Teacher" class="col-sm-4 col-form-label">Teacher</label>
+                                <div class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Teacher)
+                                </div>
+                            </div>
 
-		<div class="form-group row">
-			<label asp-for="CreatedAt" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.CreatedAt)
-		</div>
+                            <div class="form-group row">
+                                <label asp-for="CreatedAt" class="col-sm-4 col-form-label">Created At</label>
+                                <div class="col-sm-8">
+                                    @Html.DisplayFor(model => model.CreatedAt)
+                                </div>
+                            </div>
 
-		<div class="form-group row">
-			<label asp-for="UpdatedAt" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.UpdatedAt)
-		</div>
-	</dl>
-	@{
-		ViewData["ShowRemoveButton"] = false;
-	}
-	@foreach (var images in Model.Image)
-	{
-		<partial name="_Images" model="images" />
-	}
+                            <div class="form-group row">
+                                <label asp-for="UpdatedAt" class="col-sm-4 col-form-label">Updated At</label>
+                                <div class="col-sm-8">
+                                    @Html.DisplayFor(model => model.UpdatedAt)
+                                </div>
+                            </div>
 
-	<a asp-action="Index" asp-controller="kindergartens" class="btn btn-outline-danger">Back</a>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var image in Model.Image)
+            {
+                <div class="col-sm-3 mt-3">
+                    <div class="image-container position-relative">
+                        <img class="card-image-top img-fluid" src="@image.Image" />
+                    </div>
+                </div>
+            }
+        </div>
+
+        <hr />
+        <a asp-action="Index" asp-controller="kindergartens" class="btn btn-danger">Back</a>
+    </div>
 </div>
