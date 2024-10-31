@@ -17,13 +17,13 @@
             {
                 var imagePath = Model.FileToApis.FirstOrDefault(f => f.SpaceshipId == spaceship.Id)?.ExistingFilePath;
                 <div class="col-md-3">
-                    <div class="card" style="background-image: url('../../multipleFileUpload/@imagePath'); height: 12.5rem; background-size: cover; background-position: center; overflow: hidden;">
+                    <a asp-action="Details" asp-controller="Spaceships" asp-route-id="@spaceship.Id" class="card" style="background-image: url('../../multipleFileUpload/@imagePath'); height: 12.5rem; background-size: cover; background-position: center; overflow: hidden; text-decoration: none;">
                         <div class="card-body">
-                            <h4 class="card-title">@spaceship.Name</h4>
-                            <p class="card-text">@spaceship.SpaceshipModel</p>
-                            <p class="card-text"><small class="text-muted">Updated at: @spaceship.ModifiedAt</small></p>
+                            <h4 class="card-title text-white">@spaceship.Name</h4>
+                            <p class="card-text text-white">@spaceship.SpaceshipModel</p>
+                            <p class="card-text text-white"><small class="text-muted">Updated at: @spaceship.ModifiedAt</small></p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             }
         </div>
@@ -40,13 +40,13 @@
                 ? $"data:image/jpeg;base64,{Convert.ToBase64String(image.ImageData)}"
                 : null;
                 <div class="col-md-3">
-                    <div class="card" style="background-image: url('@imageUrl');  height: 12.5rem; background-size: cover; background-position: center; overflow: hidden;">
+                    <a asp-action="Details" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="card" style="background-image: url('@imageUrl');  height: 12.5rem; background-size: cover; background-position: center; overflow: hidden; text-decoration: none;">
                         <div class="card-body">
-                            <h4 class="card-title">@kindergarten.KindergartenName</h4>
-                            <p class="card-text">@kindergarten.GroupName</p>
-                            <p class="card-text"><small class="text-muted">Updated at: @kindergarten.UpdatedAt</small></p>
+                            <h4 class="card-title text-white">@kindergarten.KindergartenName</h4>
+                            <p class="card-text text-white">@kindergarten.GroupName</p>
+                            <p class="card-text text-white"><small class="text-muted">Updated at: @kindergarten.UpdatedAt</small></p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             }
         </div>
@@ -63,15 +63,13 @@
                 ? $"data:image/jpeg;base64,{Convert.ToBase64String(image.ImageData)}"
                 : null;
                 <div class="col-md-3">
-                    <div class="card" style="background-image: url('@imageUrl');  height: 12.5rem; background-size: cover; background-position: center; no-repeat; overflow: hidden;">
+                    <a asp-action="Details" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="card" style="background-image: url('@imageUrl');  height: 12.5rem; background-size: cover; background-position: center; overflow: hidden; text-decoration: none;">
                         <div class="card-body">
-                            <div>
-                            <h4 class="card-title">@realEstate.Location</h4>
-                            <p class="card-text">@realEstate.BuildingType</p>
-                            <p class="card-text"><small class="text-muted">Updated at: @realEstate.ModifiedAt</small></p>
-                            </div>
+                            <h4 class="card-title text-white">@realEstate.Location</h4>
+                            <p class="card-text text-white">@realEstate.RoomNumber</p>
+                            <p class="card-text text-white"><small class="text-muted">Updated at: @realEstate.ModifiedAt</small></p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             }
         </div>
