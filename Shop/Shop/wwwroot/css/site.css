@@ -94,3 +94,9 @@ body {
     display: flex;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0; /* Optional: for spacing */
+}
+

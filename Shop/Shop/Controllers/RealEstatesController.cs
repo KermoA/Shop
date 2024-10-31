@@ -28,23 +28,39 @@ namespace Shop.Controllers
 			_fileServices = fileServices;
 		}
 
-		public IActionResult Index()
-		{
-			var result = _context.RealEstates
-				.Select(x => new RealEstateIndexViewModel
-				{
-					Id = x.Id,
-					Size = x.Size,
-					Location = x.Location,
-					RoomNumber = x.RoomNumber,
-					BuildingType = x.BuildingType
+        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
+        {
+            var query = _context.RealEstates
+                .Select(x => new RealEstateIndexViewModel
+                {
+                    Id = x.Id,
+                    Size = x.Size,
+                    Location = x.Location,
+                    RoomNumber = x.RoomNumber,
+                    BuildingType = x.BuildingType,
+                });
 
-				});
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-			return View(result);
-		}
+            var realEstates = query
+                .OrderBy(r => r.Location)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
-		[HttpGet]
+            var model = new RealEstatesPagedViewModel
+            {
+                RealEstates = realEstates,
+                CurrentPage = pageNumber,
+                TotalPages = totalPages,
+                PageSize = pageSize
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
 		public IActionResult Create()
 		{
 			RealEstateCreateUpdateViewModel realEstates = new();

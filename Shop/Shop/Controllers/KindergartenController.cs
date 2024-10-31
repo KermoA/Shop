@@ -25,22 +25,39 @@ namespace KindergartenProject.Controllers
 			_kindergartenServices = kindergartensServices;
             _fileServices = fileServices;
         }
-		public IActionResult Index()
-		{
-			var result = _context.Kindergartens
-				.Select(x => new KindergartensIndexViewModel
-				{
-					Id = x.Id,
-					GroupName = x.GroupName,
-					ChildrenCount = x.ChildrenCount,
-					KindergartenName = x.KindergartenName,
-					Teacher = x.Teacher
-				});
+        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
+        {
+            var query = _context.Kindergartens
+                .Select(x => new KindergartensIndexViewModel
+                {
+                    Id = x.Id,
+                    GroupName = x.GroupName,
+                    ChildrenCount = x.ChildrenCount,
+                    KindergartenName = x.KindergartenName,
+                    Teacher = x.Teacher
+                });
 
-			return View(result);
-		}
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-		[HttpGet]
+            var kindergartens = query
+                .OrderBy(k => k.KindergartenName) // Adjust ordering as necessary
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var model = new KindergartensPagedViewModel
+            {
+                Kindergartens = kindergartens,
+                CurrentPage = pageNumber,
+                TotalPages = totalPages,
+                PageSize = pageSize
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
 		public IActionResult Create()
 		{
 			KindergartenCreateUpdateViewModel result = new();

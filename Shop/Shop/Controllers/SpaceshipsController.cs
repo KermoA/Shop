@@ -4,11 +4,10 @@ using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
 using Shop.Models.Spaceships;
-using Shop.ApplicationServices;
 
 namespace Shop.Controllers
 {
-	public class SpaceshipsController : Controller
+    public class SpaceshipsController : Controller
 	{
 		private readonly ShopContext _context;
 		private readonly ISpaceshipsServices _spaceshipServices;
@@ -27,22 +26,39 @@ namespace Shop.Controllers
 		}
 
 
-		public IActionResult Index()
-		{
-			var result = _context.Spaceships
-				.Select(x => new SpaceshipsIndexViewModel
-				{
-					Id = x.Id,
-					Name = x.Name,
-					Typename = x.Typename,
-					BuiltDate = x.BuiltDate,
-					Crew = x.Crew,
-				});
+        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
+        {
+            var query = _context.Spaceships
+                .Select(x => new SpaceshipsIndexViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Typename = x.Typename,
+                    BuiltDate = x.BuiltDate,
+                    Crew = x.Crew,
+                });
 
-			return View(result);
-		}
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-		[HttpGet]
+            var spaceships = query
+                .OrderBy(s => s.Name)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var model = new SpaceshipsPagedViewModel
+            {
+                Spaceships = spaceships,
+                CurrentPage = pageNumber,
+                TotalPages = totalPages,
+                PageSize = pageSize
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
 		public IActionResult Create()
 		{
 			SpaceshipCreateUpdateViewModel result = new();
