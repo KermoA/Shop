@@ -32,16 +32,60 @@ body {
     left: 0;
     width: 100%;
     background-color: rgba(255, 255, 255, 0.1);
-    z-index: 1;
+    z-index: 2;
     display: flex;
 }
 .nav-link {
     color: white;
     transition: color 0.3s, border-bottom 0.3s;
 }
-
     .nav-link:hover {
         background-color: rgba(255, 255, 255, 0.2);
         border-bottom: 2px solid rgba(255, 215, 0, 0.8);
+    }
+.banner-overlay-button {
+    position: absolute;
+    top: 25%;
+    right: 35%;
+    z-index: 1;
+}
+.banner-overlay-text {
+    position: absolute;
+    color: white;
+    justify-content: center;
+    top: 20%;
+    z-index: 1;
+}
+.custom-create-button {
+    width: 200px;
+    height: 60px;
+    font-size: 24px;
+    padding: 10px 20px;
+}
+
+.banner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+    .banner-overlay h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .banner-overlay .btn {
+        font-size: 1.2rem;
+        padding: 10px 20px;
     }
 

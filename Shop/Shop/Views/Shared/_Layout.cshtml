@@ -13,6 +13,9 @@
         @{
             string bannerImage = "";
             bool isVideo = false;
+            bool showSpaceshipCreateButton = false;
+            bool showRealEstateCreateButton = false;
+            bool showKindergartenCreateButton = false;
             var controller = ViewContext.RouteData.Values["controller"]?.ToString();
             switch (controller)
             {
@@ -22,12 +25,15 @@
                     break;
                 case "Spaceships":
                     bannerImage = "~/images/spaceshipBanner.jpg";
+                    showSpaceshipCreateButton = true;
                     break;
                 case "RealEstates":
                     bannerImage = "~/images/realEstateBanner.jpg";
+                    showRealEstateCreateButton = true;
                     break;
                 case "Kindergartens":
                     bannerImage = "~/images/kindergartenBanner.jpg";
+                    showKindergartenCreateButton = true;
                     break;
                 default:
                     bannerImage = "~/images/defaultBanner.jpg";
@@ -45,6 +51,25 @@
         {
             <img src="@Url.Content(bannerImage)" alt="Banner" class="img-fluid" style="width: 100%; height: 500px; object-fit: cover;" />
         }
+
+        <div class="banner-overlay">
+            @if (showSpaceshipCreateButton)
+            {
+                <h1>Expand the galaxy—create a new spaceship entry now.</h1>
+                <a asp-action="Create" asp-controller="Spaceships" class="btn btn-primary">New Entry</a>
+            }
+            @if (showRealEstateCreateButton)
+            {
+                <h1>Invest in connections—create a real estate entry today.</h1>
+                <a asp-action="Create" asp-controller="RealEstates" class="btn btn-primary">New Entry</a>
+            }
+            @if (showKindergartenCreateButton)
+            {
+                <h1>Start a new journey in early education by creating a kindergarten entry.</h1>
+                <a asp-action="Create" asp-controller="Kindergartens" class="btn btn-primary">New Entry</a>
+            }
+        </div>
+
     </div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3 navbar-overlay">
