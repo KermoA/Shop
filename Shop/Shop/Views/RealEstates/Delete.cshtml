@@ -46,6 +46,9 @@
 			@Html.DisplayFor(Model => Model.ModifiedAt)
 		</div>
 	</dl>
+	@{
+		ViewData["ShowRemoveButton"] = false;
+	}
 		@foreach (var images in Model.Image)
 		{
 			<partial name="_Images" model="images" />

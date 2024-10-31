@@ -48,7 +48,9 @@
             <label asp-for="ModifiedAt" class="col-sm-2 col-form-label"></label>
             @Html.DisplayFor(model => model.ModifiedAt)
         </div>
-
+        @{
+            ViewData["ShowRemoveButton"] = false;
+        }
         @foreach(var images in Model.Images)
         {
             <partial name="_Images" model="images" />

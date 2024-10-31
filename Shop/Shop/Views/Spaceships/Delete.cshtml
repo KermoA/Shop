@@ -71,6 +71,9 @@
 
 	<dl class="row">
 		<div class="form-group row">
+			@{
+				ViewData["ShowRemoveButton"] = false;
+			}
 			@foreach (var images in Model.ImageViewModel)
 			{
 				<partial name="_Images" model="images" />
