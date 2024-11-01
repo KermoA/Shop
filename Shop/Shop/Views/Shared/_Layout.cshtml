@@ -7,6 +7,33 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Shop.styles.css" asp-append-version="true" />
+
+    @{
+        string faviconPath = "/icons/defaultFavicon.ico"; // Default favicon
+
+        var iconController = ViewContext.RouteData.Values["controller"]?.ToString();
+        switch (iconController)
+        {
+            case "Home":
+                faviconPath = "/icons/homeIcon32.png";
+                break;
+            case "Spaceships":
+                faviconPath = "/icons/spaceshipIcon32.png";
+                break;
+            case "RealEstates":
+                faviconPath = "/icons/realEstateIcon32.png";
+                break;
+            case "Kindergartens":
+                faviconPath = "/icons/kindergartenIcon32.png";
+                break;
+            default:
+                faviconPath = "/icons/homeIcon32.png";
+                break;
+        }
+    }
+
+    <link rel="icon" href="@faviconPath" type="image/x-icon">
+
 </head>
 <body>
     <div class="banner">
