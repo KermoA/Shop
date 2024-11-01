@@ -2,43 +2,47 @@
 
 <div class="h1 text-white mt-4 mb-3">Kindergartens</div>
 
-<table class="table text-white table-hover">
-    <thead class="text-white">
-        <tr>
-            <th scope="col">Nr</th>
-            <th scope="col">Group Name</th>
-            <th scope="col">Children Count</th>
-            <th scope="col">Kindergarten Name</th>
-            <th scope="col">Teacher</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody class="text-white">
-        @for (int i = 0; i < Model.Kindergartens.Count(); i++)
+<div class="container">
+    <form method="post">
+        <table class="table text-white table-hover" style="table-layout: fixed; width: 100%;">
+            <thead class="text-white">
+                <tr>
+                    <th class="col-1" scope="col">Nr</th>
+                    <th class="col-3" scope="col">Kindergarten Name</th>
+                    <th class="col-2" scope="col">Group Name</th>
+                    <th class="col-3" scope="col">Teacher</th>
+                    <th class="col-2" scope="col">Children Count</th>
+                    <th class="col-3" scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="text-white">
+                @for (int i = 0; i < Model.Kindergartens.Count(); i++)
+                {
+                    var kindergarten = Model.Kindergartens.ElementAt(i);
+                    <tr>
+                        <td>@((Model.CurrentPage - 1) * Model.PageSize + (i + 1))</td>
+                        <td>@kindergarten.KindergartenName</td>
+                        <td>@kindergarten.GroupName</td>
+                        <td>@kindergarten.Teacher</td>
+                        <td>@kindergarten.ChildrenCount</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@kindergarten.Id" class="btn btn-info">Details</a>
+                            <a asp-action="Update" asp-route-id="@kindergarten.Id" class="btn btn-primary">Update</a>
+                            <a asp-action="Delete" asp-route-id="@kindergarten.Id" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+
         {
-            var kindergarten = Model.Kindergartens.ElementAt(i);
-            <tr>
-                <td>@((Model.CurrentPage - 1) * Model.PageSize + (i + 1))</td>
-                <td>@kindergarten.GroupName</td>
-                <td>@kindergarten.ChildrenCount</td>
-                <td>@kindergarten.KindergartenName</td>
-                <td>@kindergarten.Teacher</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@kindergarten.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Update" asp-route-id="@kindergarten.Id" class="btn btn-primary">Update</a>
-                    <a asp-action="Delete" asp-route-id="@kindergarten.Id" class="btn btn-outline-danger">Delete</a>
-                </td>
-            </tr>
+            <a asp-action="Index" asp-route-pageNumber="@i" class="btn @((i == Model.CurrentPage) ? "btn-primary" : "btn-secondary") mx-1">
+                @i
+            </a>
         }
-    </tbody>
-</table>
-
-<div class="pagination">
-    @for (int i = 1; i <= Model.TotalPages; i++)
-
-    {
-        <a asp-action="Index" asp-route-pageNumber="@i" class="btn @((i == Model.CurrentPage) ? "btn-primary" : "btn-secondary") mx-1">
-            @i
-        </a>
-    }
+    </div>
 </div>

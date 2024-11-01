@@ -2,45 +2,47 @@
 
 <div class="h1 text-white mt-4 mb-3">Real Estates</div>
 
-<form method="post">
-    <table class="table text-white table-hover">
-        <thead class="text-white">
-            <tr>
-                <th scope="col">Nr</th>
-                <th scope="col">Size</th>
-                <th scope="col">Location</th>
-                <th scope="col">Room Number</th>
-                <th scope="col">Building Type</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody class="text-white">
-            @for (int i = 0; i < Model.RealEstates.Count(); i++)
-            {
-                var realEstate = Model.RealEstates.ElementAt(i);
+<div class="container">
+    <form method="post">
+        <table class="table text-white table-hover" style="table-layout: fixed; width: 100%;">
+            <thead class="text-white">
                 <tr>
-                    <td>@((Model.CurrentPage - 1) * Model.PageSize + (i + 1))</td>
-                    <td>@realEstate.Size</td>
-                    <td>@realEstate.Location</td>
-                    <td>@realEstate.RoomNumber</td>
-                    <td>@realEstate.BuildingType</td>
-                    <td>
-                        <a asp-action="Details" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-info">Details</a>
-                        <a asp-action="Update" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-primary">Update</a>
-                        <a asp-action="Delete" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-outline-danger">Delete</a>
-                    </td>
+                    <th class="col-2" scope="col">Nr</th>
+                    <th class="col-2" scope="col">Size</th>
+                    <th class="col-3" scope="col">Location</th>
+                    <th class="col-2" scope="col">Room Number</th>
+                    <th class="col-3" scope="col">Building Type</th>
+                    <th class="col-3" scope="col"></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</form>
+            </thead>
+            <tbody class="text-white">
+                @for (int i = 0; i < Model.RealEstates.Count(); i++)
+                {
+                    var realEstate = Model.RealEstates.ElementAt(i);
+                    <tr>
+                        <td>@((Model.CurrentPage - 1) * Model.PageSize + (i + 1))</td>
+                        <td>@realEstate.Size</td>
+                        <td>@realEstate.Location</td>
+                        <td>@realEstate.RoomNumber</td>
+                        <td>@realEstate.BuildingType</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-info">Details</a>
+                            <a asp-action="Update" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-primary">Update</a>
+                            <a asp-action="Delete" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
 
-<div class="pagination">
-    @for (int i = 1; i <= Model.TotalPages; i++)
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
 
-    {
-        <a asp-action="Index" asp-route-pageNumber="@i" class="btn @((i == Model.CurrentPage) ? "btn-primary" : "btn-secondary") mx-1">
-            @i
-        </a>
-    }
+        {
+            <a asp-action="Index" asp-route-pageNumber="@i" class="btn @((i == Model.CurrentPage) ? "btn-primary" : "btn-secondary") mx-1">
+                @i
+            </a>
+        }
+    </div>
 </div>
