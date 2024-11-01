@@ -28,7 +28,7 @@ namespace Shop.Controllers
 			_fileServices = fileServices;
 		}
 
-        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
+        public IActionResult Index(int pageNumber = 1, int pageSize = 5, string sortOrder = null)
         {
             var query = _context.RealEstates
                 .Select(x => new RealEstateIndexViewModel
@@ -40,11 +40,38 @@ namespace Shop.Controllers
                     BuildingType = x.BuildingType,
                 });
 
+            switch (sortOrder)
+            {
+                case "location_desc":
+                    query = query.OrderByDescending(r => r.Location);
+                    break;
+                case "size":
+                    query = query.OrderBy(r => r.Size);
+                    break;
+                case "size_desc":
+                    query = query.OrderByDescending(r => r.Size);
+                    break;
+                case "room":
+                    query = query.OrderBy(r => r.RoomNumber);
+                    break;
+                case "room_desc":
+                    query = query.OrderByDescending(r => r.RoomNumber);
+                    break;
+                case "type":
+                    query = query.OrderBy(r => r.BuildingType);
+                    break;
+                case "type_desc":
+                    query = query.OrderByDescending(r => r.BuildingType);
+                    break;
+                default:
+                    query = query.OrderBy(r => r.Location);
+                    break;
+            }
+
             var totalItems = query.Count();
             var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
             var realEstates = query
-                .OrderBy(r => r.Location)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -54,7 +81,8 @@ namespace Shop.Controllers
                 RealEstates = realEstates,
                 CurrentPage = pageNumber,
                 TotalPages = totalPages,
-                PageSize = pageSize
+                PageSize = pageSize,
+                SortOrder = sortOrder
             };
 
             return View(model);

@@ -26,7 +26,7 @@ namespace Shop.Controllers
 		}
 
 
-        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
+        public IActionResult Index(int pageNumber = 1, int pageSize = 5, string sortOrder = null)
         {
             var query = _context.Spaceships
                 .Select(x => new SpaceshipsIndexViewModel
@@ -38,11 +38,38 @@ namespace Shop.Controllers
                     Crew = x.Crew,
                 });
 
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    query = query.OrderByDescending(s => s.Name);
+                    break;
+                case "type":
+                    query = query.OrderBy(s => s.Typename);
+                    break;
+                case "type_desc":
+                    query = query.OrderByDescending(s => s.Typename);
+                    break;
+                case "date":
+                    query = query.OrderBy(s => s.BuiltDate);
+                    break;
+                case "date_desc":
+                    query = query.OrderByDescending(s => s.BuiltDate);
+                    break;
+                case "crew":
+                    query = query.OrderBy(s => s.Crew);
+                    break;
+                case "crew_desc":
+                    query = query.OrderByDescending(s => s.Crew);
+                    break;
+                default:
+                    query = query.OrderBy(s => s.Name);
+                    break;
+            }
+
             var totalItems = query.Count();
             var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
             var spaceships = query
-                .OrderBy(s => s.Name)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -52,7 +79,8 @@ namespace Shop.Controllers
                 Spaceships = spaceships,
                 CurrentPage = pageNumber,
                 TotalPages = totalPages,
-                PageSize = pageSize
+                PageSize = pageSize,
+                SortOrder = sortOrder
             };
 
             return View(model);

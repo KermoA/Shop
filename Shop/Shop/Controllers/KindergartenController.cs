@@ -25,7 +25,7 @@ namespace KindergartenProject.Controllers
 			_kindergartenServices = kindergartensServices;
             _fileServices = fileServices;
         }
-        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
+        public IActionResult Index(int pageNumber = 1, int pageSize = 5, string sortOrder = null)
         {
             var query = _context.Kindergartens
                 .Select(x => new KindergartensIndexViewModel
@@ -37,11 +37,38 @@ namespace KindergartenProject.Controllers
                     Teacher = x.Teacher
                 });
 
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    query = query.OrderByDescending(k => k.KindergartenName);
+                    break;
+                case "group":
+                    query = query.OrderBy(k => k.GroupName);
+                    break;
+                case "group_desc":
+                    query = query.OrderByDescending(k => k.GroupName);
+                    break;
+                case "children":
+                    query = query.OrderBy(k => k.ChildrenCount);
+                    break;
+                case "children_desc":
+                    query = query.OrderByDescending(k => k.ChildrenCount);
+                    break;
+                case "teacher":
+                    query = query.OrderBy(k => k.Teacher);
+                    break;
+                case "teacher_desc":
+                    query = query.OrderByDescending(k => k.Teacher);
+                    break;
+                default:
+                    query = query.OrderBy(k => k.KindergartenName);
+                    break;
+            }
+
             var totalItems = query.Count();
             var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
             var kindergartens = query
-                .OrderBy(k => k.KindergartenName) // Adjust ordering as necessary
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -51,7 +78,8 @@ namespace KindergartenProject.Controllers
                 Kindergartens = kindergartens,
                 CurrentPage = pageNumber,
                 TotalPages = totalPages,
-                PageSize = pageSize
+                PageSize = pageSize,
+                SortOrder = sortOrder
             };
 
             return View(model);

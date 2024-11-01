@@ -1,8 +1,29 @@
 ﻿@model Shop.Models.Kindergartens.KindergartensPagedViewModel
 
-<div class="h1 text-white mt-4 mb-3">Kindergartens</div>
-
 <div class="container">
+    <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-sm-6">
+            <h1 class="text-white mt-4 mb-3">Kindergartens</h1>
+        </div>
+        <div class="col-sm-3">
+            <form asp-action="Index" method="get" class="mb-3">
+                <div class="form-group">
+                    <label for="sortOrder" class="sr-only text-white">Sort By:</label>
+                    @Html.DropDownList("sortOrder", new SelectList(new[]
+                             {
+                    new { Value = "", Text = "Kindergarten Name (Ascending)" },
+                    new { Value = "name_desc", Text = "Kindergarten Name (Descending)" },
+                    new { Value = "group", Text = "Group Name (Ascending)" },
+                    new { Value = "group_desc", Text = "Group Name (Descending)" },
+                    new { Value = "children", Text = "Children Count (Ascending)" },
+                    new { Value = "children_desc", Text = "Children Count (Descending)" },
+                    new { Value = "teacher", Text = "Teacher (Ascending)" },
+                    new { Value = "teacher_desc", Text = "Teacher (Descending)" }
+                    }, "Value", "Text", Model.SortOrder), new { @class = "form-control", onchange = "this.form.submit()" })
+                </div>
+            </form>
+        </div>
+    </div>
     <form method="post">
         <table class="table text-white table-hover" style="table-layout: fixed; width: 100%;">
             <thead class="text-white">
@@ -38,9 +59,8 @@
 
     <div class="pagination">
         @for (int i = 1; i <= Model.TotalPages; i++)
-
         {
-            <a asp-action="Index" asp-route-pageNumber="@i" class="btn @((i == Model.CurrentPage) ? "btn-primary" : "btn-secondary") mx-1">
+            <a asp-action="Index" asp-route-pageNumber="@i" asp-route-sortOrder="@Model.SortOrder" class="btn @((i == Model.CurrentPage) ? "btn-primary" : "btn-secondary") mx-1">
                 @i
             </a>
         }
