@@ -27,6 +27,7 @@ namespace KindergartenProject.Controllers
         }
         public IActionResult Index(int pageNumber = 1, int pageSize = 5, string sortOrder = null)
         {
+            ViewData["Title"] = "Kindergartens";
             var query = _context.Kindergartens
                 .Select(x => new KindergartensIndexViewModel
                 {
@@ -95,7 +96,8 @@ namespace KindergartenProject.Controllers
         [HttpGet]
 		public IActionResult Create()
 		{
-			KindergartenCreateUpdateViewModel result = new();
+            ViewData["Title"] = "Create Kindergarten";
+            KindergartenCreateUpdateViewModel result = new();
 
 			return View("CreateUpdate", result);
 		}
@@ -136,7 +138,8 @@ namespace KindergartenProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Details(Guid id)
 		{
-			var kindergarten = await _kindergartenServices.DetailAsync(id);
+            ViewData["Title"] = "Kindergarten Details";
+            var kindergarten = await _kindergartenServices.DetailAsync(id);
 
 			if (kindergarten == null)
 			{
@@ -172,7 +175,8 @@ namespace KindergartenProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid id)
 		{
-			var kindergarten = await _kindergartenServices.DetailAsync(id);
+            ViewData["Title"] = "Update Kindergarten";
+            var kindergarten = await _kindergartenServices.DetailAsync(id);
 
 			if (kindergarten == null)
 			{
@@ -240,7 +244,8 @@ namespace KindergartenProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			var kindergarten = await _kindergartenServices.DetailAsync(id);
+            ViewData["Title"] = "Delete Kindergarten";
+            var kindergarten = await _kindergartenServices.DetailAsync(id);
 
 			if (kindergarten == null)
 			{

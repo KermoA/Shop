@@ -1,5 +1,13 @@
 ﻿@model Shop.Models.RealEstates.RealEstatesPagedViewModel
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Shop</title>
+</head>
+<body>
 <div class="container">
         <div class="row d-flex align-items-center justify-content-between">
         <div class="col-sm-6">
@@ -49,9 +57,9 @@
                         <td>@realEstate.RoomNumber</td>
                         <td>@realEstate.BuildingType</td>
                         <td>
-                            <a asp-action="Details" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-info">Details</a>
-                            <a asp-action="Update" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-primary">Update</a>
-                            <a asp-action="Delete" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-outline-danger">Delete</a>
+                            <a asp-action="Details" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-details">Details</a>
+                            <a asp-action="Update" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-update">Update</a>
+                            <a asp-action="Delete" asp-controller="RealEstates" asp-route-id="@realEstate.Id" class="btn btn-delete">Delete</a>
                         </td>
                     </tr>
                 }
@@ -62,9 +70,11 @@
     <div class="pagination">
         @for (int i = 1; i <= Model.TotalPages; i++)
         {
-            <a asp-action="Index" asp-route-pageNumber="@i" asp-route-sortOrder="@Model.SortOrder" class="btn @((i == Model.CurrentPage) ? "btn-primary" : "btn-secondary") mx-1">
+            <a asp-action="Index" asp-route-pageNumber="@i" asp-route-sortOrder="@Model.SortOrder" class="btn @((i == Model.CurrentPage) ? "btn-pagination-primary" : "btn-pagination-secondary") mx-1">
                 @i
             </a>
         }
     </div>
 </div>
+</body>
+</html>

@@ -31,7 +31,8 @@ namespace Shop.Controllers
 
 		public IActionResult Index()
 		{
-			var viewModel = new HomePageViewModel
+            ViewData["Title"] = "Shop";
+            var viewModel = new HomePageViewModel
 			{
 				Spaceships = _spaceshipService.GetAll(),
 				Kindergartens = _kindergartenService.GetAll(),
@@ -46,6 +47,7 @@ namespace Shop.Controllers
 
 		public IActionResult Privacy()
         {
+            ViewData["Title"] = "Privacy Policy";
             return View();
         }
 

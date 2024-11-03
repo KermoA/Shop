@@ -28,6 +28,7 @@ namespace Shop.Controllers
 
         public IActionResult Index(int pageNumber = 1, int pageSize = 5, string sortOrder = null)
         {
+            ViewData["Title"] = "Spaceships";
             var query = _context.Spaceships
                 .Select(x => new SpaceshipsIndexViewModel
                 {
@@ -96,7 +97,8 @@ namespace Shop.Controllers
         [HttpGet]
 		public IActionResult Create()
 		{
-			SpaceshipCreateUpdateViewModel result = new();
+            ViewData["Title"] = "Create Spaceship";
+            SpaceshipCreateUpdateViewModel result = new();
 
 			return View("CreateUpdate", result);
 		}
@@ -138,7 +140,8 @@ namespace Shop.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Details(Guid id)
 		{
-			var spaceship = await _spaceshipServices.DetailAsync(id);
+            ViewData["Title"] = "Spaceship Details";
+            var spaceship = await _spaceshipServices.DetailAsync(id);
 
 			if (spaceship == null)
 			{
@@ -172,7 +175,9 @@ namespace Shop.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid id)
 		{
-			var spaceship = await _spaceshipServices.DetailAsync(id);
+            ViewData["Title"] = "Update Spaceship";
+
+            var spaceship = await _spaceshipServices.DetailAsync(id);
 
 			if (spaceship == null)
 			{
@@ -240,7 +245,8 @@ namespace Shop.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			var spaceship = await _spaceshipServices.DetailAsync(id);
+            ViewData["Title"] = "Delete Spaceship";
+            var spaceship = await _spaceshipServices.DetailAsync(id);
 
 			if (spaceship == null)
 			{

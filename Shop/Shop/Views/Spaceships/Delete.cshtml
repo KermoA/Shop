@@ -1,5 +1,13 @@
 ﻿@model Shop.Models.Spaceships.SpaceshipDeleteViewModel
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Shop</title>
+</head>
+<body>
 <div class="card crud-card m-5">
     <div class="card-header">
         <h5 class="card-title">Delete</h5>
@@ -93,7 +101,9 @@
 
 	<form asp-action="DeleteConfirmation">
 		<input type="hidden" asp-for="Id" />
-		<input type="submit" value="Delete" class="btn btn-danger" />
-		<a asp-action="Index" asp-controller="spaceships" class="btn btn-success">Back</a>
+		<input type="submit" value="Delete" class="btn btn-delete" />
+		<a asp-action="Index" asp-controller="spaceships" class="btn btn-back">Back</a>
 	</form>
 </div>
+</body>
+</html>

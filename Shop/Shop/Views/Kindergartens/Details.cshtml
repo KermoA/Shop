@@ -1,5 +1,13 @@
 ﻿@model Shop.Models.Kindergartens.KindergartenDetailsViewModel
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Shop</title>
+</head>
+<body>
 <div class="card crud-card m-5">
     <div class="card-header">
         <h5 class="card-title">Details</h5>
@@ -78,6 +86,8 @@
         </div>
 
         <hr />
-        <a asp-action="Index" asp-controller="kindergartens" class="btn btn-danger">Back</a>
+        <a asp-action="Index" asp-controller="kindergartens" class="btn btn-back">Back</a>
     </div>
 </div>
+</body>
+</html>

@@ -1,5 +1,14 @@
 ﻿@model Shop.Models.Spaceships.SpaceshipCreateUpdateViewModel
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Shop</title>
+</head>
+<body>
+
 <div class="card crud-card m-5">
     <div class="card-header">
         @if (Model.Id.HasValue)
@@ -94,8 +103,15 @@
 
             <hr />
 
-            <input type="submit" class="btn btn-primary" value="@(Model.Id.HasValue ? "Update" : "Create")" />
-            <a asp-action="Index" asp-controller="spaceships" class="btn btn-success">Back</a>
+            @if (Model.Id.HasValue)
+            {
+                <input asp-action="update" asp-controller="spaceships" type="submit" class="btn btn-update" value="Update" />
+            }
+            else
+            {
+                <input asp-action="create" asp-controller="spaceships" type="submit" class="btn btn-create" value="Create" />
+            }
+            <a asp-action="Index" asp-controller="spaceships" class="btn btn-back">Back</a>
         </form>
     </div>
 </div>
@@ -120,4 +136,7 @@
         }
     }
 </script>
+</body>
+</html>
+
 

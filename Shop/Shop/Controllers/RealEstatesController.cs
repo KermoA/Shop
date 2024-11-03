@@ -30,6 +30,7 @@ namespace Shop.Controllers
 
         public IActionResult Index(int pageNumber = 1, int pageSize = 5, string sortOrder = null)
         {
+            ViewData["Title"] = "Real Estates";
             var query = _context.RealEstates
                 .Select(x => new RealEstateIndexViewModel
                 {
@@ -98,7 +99,8 @@ namespace Shop.Controllers
         [HttpGet]
 		public IActionResult Create()
 		{
-			RealEstateCreateUpdateViewModel realEstates = new();
+            ViewData["Title"] = "Create Real Estate";
+            RealEstateCreateUpdateViewModel realEstates = new();
 
 			return View("CreateUpdate", realEstates);
 		}
@@ -139,7 +141,8 @@ namespace Shop.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Details(Guid id)
 		{
-			var realEstates = await _realEstateServices.GetAsync(id);
+            ViewData["Title"] = "Real Estate Details";
+            var realEstates = await _realEstateServices.GetAsync(id);
 
 			if (realEstates == null)
 			{
@@ -174,7 +177,8 @@ namespace Shop.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid id)
 		{
-			var realEstates = await _realEstateServices.GetAsync(id);
+            ViewData["Title"] = "Update Real Estate";
+            var realEstates = await _realEstateServices.GetAsync(id);
 			if (realEstates == null)
 			{
 				return NotFound();
@@ -239,7 +243,8 @@ namespace Shop.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			var realEstates = await _realEstateServices.GetAsync(id);
+            ViewData["Title"] = "Delete Real Estate";
+            var realEstates = await _realEstateServices.GetAsync(id);
 
 			if (realEstates == null)
 			{

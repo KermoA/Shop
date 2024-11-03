@@ -171,3 +171,96 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+.form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+    .form-control:focus {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+
+    .form-control option {
+        background-color: #1A4653;
+        color: white;
+    }
+    .form-control:focus-within option:hover {
+        background-color: #173E4A;
+        color: white;
+    }
+
+.btn-create {
+    background-color: #28a745;
+    color: white;
+}
+
+    .btn-create:hover {
+        background-color: #218838;
+        color: white;
+    }
+
+.btn-update {
+    background-color: #ffc107;
+    color: #1A4653;
+}
+
+    .btn-update:hover {
+        background-color: #e0a800;
+        color: #173E4A;
+    }
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+    .btn-delete:hover {
+        background-color: #c82333;
+        color: white;
+    }
+
+.btn-details {
+    background-color: #17a2b8;
+    color: white;
+}
+
+    .btn-details:hover {
+        background-color: #138496;
+        color: white;
+    }
+
+.btn-back {
+    background-color: #6610f2;
+    color: white;
+}
+
+    .btn-back:hover {
+        background-color: #520dc2;
+        color: white;
+    }
+
+.btn-pagination-primary {
+    background-color: #28a745;
+    color: white;
+}
+
+    .btn-pagination-primary:hover {
+        background-color: #218838;
+        color: white;
+    }
+
+.btn-pagination-secondary {
+    background-color: #d1e7dd;
+    color: black;
+
+}
+
+    .btn-pagination-secondary:hover {
+        background-color: #b3e1d1;
+        color: black;
+    }
+
+
+
+
