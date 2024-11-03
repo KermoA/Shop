@@ -36,10 +36,14 @@ namespace Shop.Controllers
                     Typename = x.Typename,
                     BuiltDate = x.BuiltDate,
                     Crew = x.Crew,
+					CreatedAt = x.CreatedAt,
                 });
 
             switch (sortOrder)
             {
+				case "name":
+                    query = query.OrderBy(s => s.Name);
+					break;
                 case "name_desc":
                     query = query.OrderByDescending(s => s.Name);
                     break;
@@ -61,8 +65,11 @@ namespace Shop.Controllers
                 case "crew_desc":
                     query = query.OrderByDescending(s => s.Crew);
                     break;
+				case "created_at":
+					query = query.OrderBy(s => s.CreatedAt);
+					break;
                 default:
-                    query = query.OrderBy(s => s.Name);
+                    query = query.OrderByDescending(s => s.CreatedAt);
                     break;
             }
 

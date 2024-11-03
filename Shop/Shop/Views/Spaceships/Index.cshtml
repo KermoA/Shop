@@ -11,7 +11,9 @@
                     <label for="sortOrder" class="sr-only text-white">Sort By:</label>
                     @Html.DropDownList("sortOrder", new SelectList(new[]
                              {
-                    new { Value = "", Text = "Name (Ascending)" },
+                    new { Value = "", Text = "Created At (Descending)" },
+                    new { Value = "created_at", Text = "Created At (Ascending)" },
+                    new { Value = "name", Text = "Name (Ascending)" },
                     new { Value = "name_desc", Text = "Name (Descending)" },
                     new { Value = "type", Text = "Type (Ascending)" },
                     new { Value = "type_desc", Text = "Type (Descending)" },

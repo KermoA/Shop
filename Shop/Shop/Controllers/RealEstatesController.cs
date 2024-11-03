@@ -38,10 +38,14 @@ namespace Shop.Controllers
                     Location = x.Location,
                     RoomNumber = x.RoomNumber,
                     BuildingType = x.BuildingType,
+					CreatedAt = x.CreatedAt,
                 });
 
             switch (sortOrder)
             {
+				case "location":
+					query = query.OrderBy(r => r.Location);
+					break;
                 case "location_desc":
                     query = query.OrderByDescending(r => r.Location);
                     break;
@@ -63,8 +67,11 @@ namespace Shop.Controllers
                 case "type_desc":
                     query = query.OrderByDescending(r => r.BuildingType);
                     break;
+				case "created_at":
+					query = query.OrderBy(r => r.CreatedAt);
+					break;
                 default:
-                    query = query.OrderBy(r => r.Location);
+                    query = query.OrderByDescending(r => r.CreatedAt);
                     break;
             }
 

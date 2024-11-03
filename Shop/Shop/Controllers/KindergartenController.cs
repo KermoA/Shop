@@ -34,11 +34,15 @@ namespace KindergartenProject.Controllers
                     GroupName = x.GroupName,
                     ChildrenCount = x.ChildrenCount,
                     KindergartenName = x.KindergartenName,
-                    Teacher = x.Teacher
+                    Teacher = x.Teacher,
+                    CreatedAt = x.CreatedAt,
                 });
 
             switch (sortOrder)
             {
+                case "name":
+                    query = query.OrderBy(k => k.KindergartenName);
+                    break;
                 case "name_desc":
                     query = query.OrderByDescending(k => k.KindergartenName);
                     break;
@@ -60,8 +64,11 @@ namespace KindergartenProject.Controllers
                 case "teacher_desc":
                     query = query.OrderByDescending(k => k.Teacher);
                     break;
+                case "created_at":
+                    query = query.OrderBy(k => k.CreatedAt);
+                    break;
                 default:
-                    query = query.OrderBy(k => k.KindergartenName);
+                    query = query.OrderByDescending(k => k.CreatedAt);
                     break;
             }
 
