@@ -23,6 +23,7 @@ namespace ShopTARge23
 			builder.Services.AddScoped<IKindergartensServices, KindergartensServices>();
             builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
 			builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
+			builder.Services.AddScoped<IChuckNorrisJokesServices, ChuckNorrisJokesServices>();
 
             builder.Services.AddDbContext<ShopContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

@@ -29,7 +29,7 @@ namespace Shop.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("City", "AccuWeathers", new { city = model.CityName });
+                return RedirectToAction("City", "AccuWeathers", new { city = model.CityName});
             }
 
             return View(model);
@@ -38,12 +38,24 @@ namespace Shop.Controllers
         [HttpGet]
         public IActionResult City(string city)
         {
-            AccuLocationWeatherResultDto dto = new();
+			AccuLocationWeatherResultDto dto = new();
             dto.CityName = city;
             
             _weatherForecastServices.AccuWeatherResult(dto);
 
-            return View();
+            AccuWeatherViewModel vm = new();
+
+            vm.EffectiveDate = dto.EffectiveDate;
+            vm.EffectiveEpochDate = dto.EffectiveEpochDate;
+            vm.Severity = dto.Severity;
+            vm.Text = dto.Text;
+            vm.Category = dto.Category;
+            vm.EndDate = dto.EndDate;
+            vm.EndEpochDate = dto.EndEpochDate;
+            vm.TempMinValue = dto.TempMinValue;
+            vm.TempMaxValue = dto.TempMaxValue;
+
+            return View(vm);
         }
     }
 }
