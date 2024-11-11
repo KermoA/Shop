@@ -62,6 +62,10 @@
                     bannerImage = "~/images/kindergartenBanner.jpg";
                     showKindergartenCreateButton = true;
                     break;
+                case "AccuWeathers":
+                    bannerImage = "~/images/codingBanner.mp4";
+                    isVideo = true;
+                    break;
                 default:
                     bannerImage = "~/images/defaultBanner.jpg";
                     break;
@@ -118,7 +122,10 @@
                             <a class="nav-link text-white" asp-area="" asp-controller="Kindergartens" asp-action="Index">Kindergarten</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="RealEstates" asp-action="Index">RealEstate</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="RealEstates" asp-action="Index">Real Estate</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="AccuWeathers" asp-action="Index">Accu Weather</a>
                         </li>
                     </ul>
                 </div>
