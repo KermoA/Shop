@@ -1,21 +1,83 @@
-﻿@model Shop.Models.ChuckNorrisJokes.ChuckNorrisIndexViewModel
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>@ViewData["Title"] - Shop</title>
 </head>
 <body>
-    <h1 class="text-white mt-5">Chuck Norris Joke</h1>
-    <div class="container text-white">
-        <div class="container">
-            <!-- Form to request a new joke -->
-            <form asp-controller="ChuckNorrisJokes" asp-action="NewJoke" method="post">
-                <div class="form-group col-md-offset-3 col-md-5">
-                    <button type="submit" class="btn btn-create">New Joke</button>
-                </div>
-            </form>
+    <div class="card crud-card m-5">
+        <div class="card-header">
+            <h5 class="card-title">Chuck Norris Facts History</h5>
+        </div>
+        <div class="card-body" style="text-align: justify">
+            <h6>What are Chuck Norris Facts?</h6>
+            <p>
+                Chuck Norris facts are satirical factoids about American martial artist and actor Chuck Norris 
+                that have become an Internet phenomenon widespread in popular culture. These 'facts' are absurd 
+                hyperbolic claims about Norris's toughness, attitude, sophistication, and masculinity.
+            </p>
+            <p>
+                Chuck Norris facts (also known as Chuck Norris jokes) have spread internationally, making 
+                translations and spawning localized versions about country-specific advertisements and 
+                other Internet phenomena. Some facts allude to his use of roundhouse kicks for seemingly 
+                any task, his large amount of body hair with specific regard to his beard, and his role 
+                in the action television series Walker, Texas Ranger. Chuck Norris jokes follow a similar 
+                format to "Yo Mama" jokes, where the humor comes from an absurd exaggeration.
+            </p>
+
+            <h6>Background</h6>
+            <p>
+                Chuck Norris facts originally appeared on the Internet in early 2005, though jokes surrounding 
+                Norris's toughness and strength are claimed to have existed since the 1980s. Initially 
+                distributed in the Something Awful forums, the "facts" centered on Vin Diesel, in response 
+                to his film The Pacifier. After a few months, forum members chose Chuck Norris to be the new 
+                subject. Conan O'Brien's Chuck Norris jokes on Late Night with Conan O'Brien (which generally 
+                center on Walker, Texas Ranger) have been seen as an inspiration for the fad. The exaggerated 
+                style of these claims is similar to a recurring Saturday Night Live sketch called "Bill Brasky". 
+                Due to the popularity of this phenomenon, similar jokes have been created for various other 
+                celebrities, as well as fictional characters.
+            </p>
+
+            <h6>Humorist Ian Spector</h6>
+            <p>
+                Humorist Ian Spector has been credited as "the author of Chuck Norris facts" due to his role 
+                in creating online Chuck Norris fact generators. Spector has also written several books of 
+                Chuck Norris facts, including The Truth About Chuck Norris: 400 Facts About the World's 
+                Greatest Human (2007) and Chuck Norris Vs. Mr. T: 400 Facts About the Baddest Dudes in the 
+                History of Ever (2008).
+            </p>
+
+            <h6>Norris' Response</h6>
+            <p>
+                Norris responded to the Chuck Norris facts on his official website with a statement. Admitting 
+                some of the statements were indeed humorous, he said he tries not to take any of them seriously, 
+                and he hopes that such statements will interest people in real facts about him contained in his 
+                literary works.
+            </p>
+            <p>
+                On October 23, 2006, Norris' first column for WorldNetDaily consisted of another response. 
+                It began similarly to the above statement from chucknorris.com, but then disclaimed his own 
+                prowess in favor of those of God and Jesus Christ.
+            </p>
+
+            <h6>Prominent Mentions</h6>
+            <p>
+                In the March 20, 2006 issue, Time magazine interviewed Norris, calling him an "online cult 
+                hero". In the answer to their last question, he called the Chuck Norris Facts "weird but 
+                wildly popular sayings" and quoted one: "Chuck Norris can divide by zero."
+            </p>
+            <p>
+                In 2011, a commercial for World of Warcraft featured Chuck Norris and included its own 
+                "Chuck Norris facts" in the dialogue.
+            </p>
+            <p>
+                In the 2012 movie The Expendables 2, there is a wink at Chuck Norris facts when one is 
+                attributed to Norris' character Booker. In one scene Booker saves Barney Ross's 
+                (Sylvester Stallone) team in a firefight. After introductions all around, Ross says to 
+                Booker, "I heard another rumor. That you were bitten by a king cobra." "Yeah, I was", 
+                Booker replies, adding, "But after five days of agonizing pain, <pause> the cobra died."
+            </p>
         </div>
     </div>
 </body>

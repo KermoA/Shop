@@ -16,13 +16,35 @@ namespace Shop.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Title"] = "Chuck Norris Jokes";
+
+            if (TempData["IsFirstVisit"] == null)
+            {
+                TempData["IsFirstVisit"] = true;
+                TempData["Joke"] = "Click 'Get Fact' for a Chuck Norris fact!";
+            }
+
             return View();
         }
 
         [HttpPost]
         public IActionResult NewJoke()
         {
-            return RedirectToAction("ChuckNorrisJoke");
+            TempData["IsFirstVisit"] = false;
+
+            ChuckNorrisJokesRootDto dto = new ChuckNorrisJokesRootDto();
+
+            _chuckNorrisJokesServices.ChuckNorrisJokesResult(dto);
+
+            if (!string.IsNullOrEmpty(dto.Value))
+            {
+                TempData["Joke"] = dto.Value;
+            }
+            else
+            {
+                TempData["Joke"] = "Joke not found.";
+            }
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -38,7 +60,7 @@ namespace Shop.Controllers
                 return View("Error");
             }
 
-            var vm = new ChuckNorrisJokesViewModel
+            var vm = new ChuckNorrisIndexViewModel
             {
                 CreatedAt = dto.CreatedAt,
                 IconUrl = dto.IconUrl,

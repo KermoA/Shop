@@ -261,6 +261,11 @@ body {
         color: black;
     }
 
+.chuck-norris-backdrop img,
+.chuck-norris-backdrop video {
+    filter: blur(1px) brightness(0.5);
+}
+
 
 
 

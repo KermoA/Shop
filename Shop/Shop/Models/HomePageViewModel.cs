@@ -1,4 +1,5 @@
 ﻿using Shop.Core.Domain;
+using Shop.Core.Dto.ChuckNorrisJokesDtos;
 
 namespace Shop.Models
 {

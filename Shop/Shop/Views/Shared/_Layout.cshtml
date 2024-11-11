@@ -26,6 +26,9 @@
             case "Kindergartens":
                 faviconPath = "/icons/kindergartenIcon32.png";
                 break;
+            case "ChuckNorrisJokes":
+                faviconPath = "/icons/chuckNorrisIcon32.ico";
+                break;
             default:
                 faviconPath = "/icons/homeIcon32.png";
                 break;
@@ -36,13 +39,14 @@
 
 </head>
 <body>
-    <div class="banner">
+    <div class="banner @(ViewContext.RouteData.Values["controller"]?.ToString() == "ChuckNorrisJokes" ? "chuck-norris-backdrop" : "")">
         @{
             string bannerImage = "";
             bool isVideo = false;
             bool showSpaceshipCreateButton = false;
             bool showRealEstateCreateButton = false;
             bool showKindergartenCreateButton = false;
+            bool showChuckNorrisJokeButton = false;
             var controller = ViewContext.RouteData.Values["controller"]?.ToString();
             switch (controller)
             {
@@ -66,10 +70,15 @@
                     bannerImage = "~/images/codingBanner.mp4";
                     isVideo = true;
                     break;
+                case "ChuckNorrisJokes":
+                    bannerImage = "~/images/chuckNorrisBanner.webp";
+                    showChuckNorrisJokeButton = true;
+                    break;
                 default:
                     bannerImage = "~/images/defaultBanner.jpg";
                     break;
             }
+
         }
         @if (isVideo)
         {
@@ -82,6 +91,7 @@
         {
             <img src="@Url.Content(bannerImage)" alt="Banner" class="img-fluid" style="width: 100%; height: 500px; object-fit: cover;" />
         }
+
 
         <div class="banner-overlay">
             @if (showSpaceshipCreateButton)
@@ -98,6 +108,16 @@
             {
                 <h1>Start a new journey in early education by creating a kindergarten entry.</h1>
                 <a asp-action="Create" asp-controller="Kindergartens" class="btn btn-create">New Entry</a>
+            }
+            @if (showChuckNorrisJokeButton)
+            {
+                <h1>@(TempData["Joke"] as string ?? "Click 'Next Fact' for a Chuck Norris fact!")</h1>
+
+                <form asp-action="NewJoke" asp-controller="ChuckNorrisJokes" method="post">
+                    <button type="submit" class="btn btn-create">
+                        @(TempData["IsFirstVisit"] != null && (bool)TempData["IsFirstVisit"] ? "Get Fact" : "Next Fact")
+                    </button>
+                </form>
             }
         </div>
 
