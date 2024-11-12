@@ -74,6 +74,10 @@
                     bannerImage = "~/images/chuckNorrisBanner.webp";
                     showChuckNorrisJokeButton = true;
                     break;
+                case "FreeToGames":
+                    bannerImage = "~/images/codingBanner.mp4";
+                    isVideo = true;
+                    break;
                 default:
                     bannerImage = "~/images/defaultBanner.jpg";
                     break;
@@ -147,6 +151,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="ChuckNorrisJokes" asp-action="Index">Chuck Norris Facts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="FreeToGames" asp-action="Index">Free Games</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="AccuWeathers" asp-action="Index">Accu Weather</a>
