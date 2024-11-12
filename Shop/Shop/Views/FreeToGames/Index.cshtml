@@ -2,44 +2,140 @@
 
 <div class="container mt-5">
     <div class="row">
-        @foreach (var game in Model.FreeGames)
-        {
-            <div class="col-md-3 mb-4">
-                <div class="game-card card">
-                    <img class="card-img-top" src="@game.Thumbnail" alt="@game.Title" />
-                    <div class="card-body">
-                        <h5 class="card-title">@game.Title</h5>
-                        <p class="card-text">@game.ShortDescription</p>
-                        <a href="@game.GameUrl" class="btn btn-primary" target="_blank">Play Now</a>
+        <div class="col-md-3 mb-4">
+            <div class="filter-sidebar card p-3">
+                <h5 class="text-center">Filter Games</h5>
+                <form asp-action="Index" method="get">
+                    <div class="form-group">
+                        <strong>Genre</strong>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="MMORPG"
+                                   id="genreMMORPG" @(Model.SelectedGenres?.Contains("MMORPG") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreMMORPG">MMORPG</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Shooter"
+                                   id="genreShooter" @(Model.SelectedGenres?.Contains("Shooter") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreShooter">Shooter</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="MOBA"
+                                   id="genreMOBA" @(Model.SelectedGenres?.Contains("MOBA") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreMOBA">MOBA</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Anime"
+                                   id="genreAnime" @(Model.SelectedGenres?.Contains("Anime") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreAnime">Anime</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Battle Royale"
+                                   id="genreBattleRoyale" @(Model.SelectedGenres?.Contains("Battle Royale") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreBattleRoyale">Battle Royale</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Strategy"
+                                   id="genreStrategy" @(Model.SelectedGenres?.Contains("Strategy") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreStrategy">Strategy</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Fantasy"
+                                   id="genreFantasy" @(Model.SelectedGenres?.Contains("Fantasy") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreFantasy">Fantasy</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Sci-Fi"
+                                   id="genreSciFi" @(Model.SelectedGenres?.Contains("Sci-Fi") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreSciFi">Sci-Fi</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Card Games"
+                                   id="genreCardGames" @(Model.SelectedGenres?.Contains("Card Games") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreCardGames">Card Games</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Racing"
+                                   id="genreRacing" @(Model.SelectedGenres?.Contains("Racing") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreRacing">Racing</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Fighting"
+                                   id="genreFighting" @(Model.SelectedGenres?.Contains("Fighting") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreFighting">Fighting</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Social"
+                                   id="genreSocial" @(Model.SelectedGenres?.Contains("Social") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreSocial">Social</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="genres" value="Sports"
+                                   id="genreSports" @(Model.SelectedGenres?.Contains("Sports") == true ? "checked" : "")>
+                            <label class="form-check-label" for="genreSports">Sports</label>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="form-group mt-3">
+                        <strong>Platform</strong>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="platforms" value="PC (Windows)"
+                                   id="platformPC" @(Model.SelectedPlatforms?.Contains("PC (Windows)") == true ? "checked" : "")>
+                            <label class="form-check-label" for="platformPC">PC</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input custom-checkbox" type="checkbox" name="platforms" value="Web Browser"
+                                   id="platformWeb" @(Model.SelectedPlatforms?.Contains("Web Browser") == true ? "checked" : "")>
+                            <label class="form-check-label" for="platformWeb">Web Browser</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-filterGames w-100 mt-4">Apply Filters</button>
+                </form>
             </div>
-        }
-    </div>
-    <div class="pagination mt-4 d-flex justify-content-center">
-        <!-- Previous Button -->
-        @if (Model.CurrentPage > 1)
-        {
-            <a asp-action="Index" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="btn btn-pagination-secondary mx-1">Prev</a>
-        }
+        </div>
 
-        <!-- Page Number Buttons (Always 5 pages) -->
-        @{
-            int startPage = Math.Max(1, Model.CurrentPage - 2);
-            int endPage = Math.Min(Model.TotalPages, startPage + 4);
+        <div class="col-md-9">
+            <div class="row">
+                @foreach (var game in Model.FreeGames)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="game-card card">
+                            <img class="card-img-top" src="@game.Thumbnail" alt="@game.Title" />
+                            <div class="card-body">
+                                <h5 class="card-title">@game.Title</h5>
+                                <p class="card-text">@game.ShortDescription</p>
+                                <a href="@game.GameUrl" class="btn btn-game" target="_blank">
+                                    @(game.Platform == "Web Browser" ? "Play Now" : "To Download")
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
 
-            for (int i = startPage; i <= endPage; i++)
-            {
-                <a asp-action="Index" asp-route-pageNumber="@i" class="btn @((i == Model.CurrentPage) ? "btn-pagination-primary" : "btn-pagination-secondary") mx-1">
-                    @i
-                </a>
-            }
-        }
+            <div class="pagination mt-4 d-flex justify-content-center">
+                @if (Model.CurrentPage > 1)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="btn btn-pagination-secondary mx-1">Prev</a>
+                }
 
-        <!-- Next Button -->
-        @if (Model.CurrentPage < Model.TotalPages)
-        {
-            <a asp-action="Index" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="btn btn-pagination-secondary mx-1">Next</a>
-        }
+                @{
+                    int startPage = Math.Max(1, Model.CurrentPage - 2);
+                    int endPage = Math.Min(Model.TotalPages, startPage + 4);
+
+                    for (int i = startPage; i <= endPage; i++)
+                    {
+                        <a asp-action="Index" asp-route-pageNumber="@i" class="btn @((i == Model.CurrentPage) ? "btn-pagination-primary" : "btn-pagination-secondary") mx-1">
+                            @i
+                        </a>
+                    }
+                }
+
+                @if (Model.CurrentPage < Model.TotalPages)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="btn btn-pagination-secondary mx-1">Next</a>
+                }
+            </div>
+        </div>
     </div>
 </div>
