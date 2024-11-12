@@ -1,6 +1,5 @@
 ﻿using Nancy.Json;
 using Shop.Core.Dto.ChuckNorrisJokesDtos;
-using Shop.Core.Dto.WeatherDtos.AccuWeatherDtos;
 using Shop.Core.ServiceInterface;
 using System.Net;
 

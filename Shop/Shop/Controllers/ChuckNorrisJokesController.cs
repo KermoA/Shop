@@ -16,7 +16,7 @@ namespace Shop.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Title"] = "Chuck Norris Jokes";
+            ViewData["Title"] = "Chuck Norris Facts";
 
             if (TempData["IsFirstVisit"] == null)
             {
