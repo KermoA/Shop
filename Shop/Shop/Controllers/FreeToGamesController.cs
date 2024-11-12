@@ -25,6 +25,10 @@ namespace Shop.Controllers
             // Get the list of games
             var gamesList = await _freeToGamesServices.FreeToGameResult();
 
+            // Set available genres and platforms in ViewData
+            ViewData["Genres"] = gamesList.Select(game => game.Genre).Distinct().ToList();
+            ViewData["Platforms"] = gamesList.Select(game => game.Platform).Distinct().ToList();
+
             // Filter by genres if provided
             if (genres != null && genres.Any())
             {
