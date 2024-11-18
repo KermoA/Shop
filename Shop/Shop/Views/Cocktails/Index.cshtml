@@ -1,0 +1,29 @@
+﻿@model Shop.Models.Cocktails.CocktailsIndexViewModel
+
+<h1>Cocktails</h1>
+
+<!-- Search Form -->
+<form method="get" asp-controller="Cocktails" asp-action="Index">
+    <input type="text" name="search" placeholder="Search for a cocktail" value="@ViewContext.HttpContext.Request.Query["search"]" />
+    <button type="submit">Search</button>
+</form>
+
+<!-- Display Cocktails -->
+@if (Model.drinks.Any())
+{
+    foreach (var drink in Model.drinks)
+    {
+        <div class="cocktail">
+            <h2>@drink.strDrink</h2>
+            <img src="@drink.strDrinkThumb" alt="@drink.strDrink" />
+            <p>@drink.strCategory</p>
+            <p>@drink.strAlcoholic</p>
+            <p>@drink.strInstructions</p>
+            <!-- Add more fields as needed -->
+        </div>
+    }
+}
+else
+{
+    <p>No cocktails found.</p>
+}

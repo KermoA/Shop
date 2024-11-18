@@ -45,7 +45,9 @@
 
 </head>
 <body>
-    <div class="banner @(ViewContext.RouteData.Values["controller"]?.ToString() == "ChuckNorrisJokes" ? "chuck-norris-backdrop" : "")">
+    <div class="banner @(ViewContext.RouteData.Values["controller"]?.ToString() == "ChuckNorrisJokes" || 
+    ViewContext.RouteData.Values["controller"]?.ToString() == "Cocktails" ? "chuck-norris-backdrop" : "")">
+
         @{
             string bannerImage = "";
             bool isVideo = false;
@@ -53,6 +55,7 @@
             bool showRealEstateCreateButton = false;
             bool showKindergartenCreateButton = false;
             bool showChuckNorrisJokeButton = false;
+            bool showCocktailSearchForm = false;
             var controller = ViewContext.RouteData.Values["controller"]?.ToString();
             switch (controller)
             {
@@ -82,6 +85,10 @@
                     break;
                 case "FreeToGames":
                     bannerImage = "~/images/gamingBanner.jpg";
+                    break;
+                case "Cocktails":
+                    bannerImage = "~/images/cocktailBanner.jpg";
+                    showCocktailSearchForm = true;
                     break;
                 default:
                     bannerImage = "~/images/defaultBanner.jpg";
@@ -128,6 +135,16 @@
                     </button>
                 </form>
             }
+            @if (showCocktailSearchForm)
+            {
+                <form method="get" asp-controller="Cocktails" asp-action="Index" class="cocktail-search-form">
+                    <div class="d-flex">
+                        <input type="text" name="search" placeholder="Search for a cocktail"
+                               value="@ViewContext.HttpContext.Request.Query["search"]" class="me-2 custom-search-box" />
+                        <button type="submit" class="btn btn-create">Search</button>
+                    </div>
+                </form>
+            }
         </div>
 
     </div>
@@ -162,6 +179,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="AccuWeathers" asp-action="Index">Accu Weather</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Cocktails" asp-action="Index">Cocktails</a>
                         </li>
 
                     </ul>

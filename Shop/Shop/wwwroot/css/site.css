@@ -340,6 +340,24 @@ body {
         border-color: #6c7377;
     }
 
+.custom-search-box {
+    background-color: rgba(255, 255, 255, 0.4);
+    color: rgb(0, 0, 0);
+    font-weight:bold;
+    border: 2px solid #ccc;
+    padding: 10px;
+    font-size: 24px;
+    border-radius: 5px;
+    width: 350px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .custom-search-box:focus {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-color: #007bff;
+        outline: none;
+    }
+
 
 
 
