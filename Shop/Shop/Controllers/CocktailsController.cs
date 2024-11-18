@@ -12,21 +12,18 @@ public class CocktailsController : Controller
         _cocktailsServices = cocktailsServices;
     }
 
-    // This method handles the search request and returns cocktails based on the search query
     [HttpGet]
     public async Task<IActionResult> Index(string search)
     {
-        // If search is null or empty, return an empty list or all cocktails
+        ViewData["Title"] = "Cocktails";
+
         if (string.IsNullOrEmpty(search))
         {
-            // You can fetch all cocktails or return an empty list
             return View(new CocktailsIndexViewModel { drinks = new List<CocktailsIndexViewModel.Drink>() });
         }
 
-        // Get cocktails from the API based on the search term
         var cocktails = await _cocktailsServices.CocktailResult(search);
 
-        // Map the result to the ViewModel
         var viewModel = new CocktailsIndexViewModel
         {
             drinks = cocktails.Select(cocktail => new CocktailsIndexViewModel.Drink

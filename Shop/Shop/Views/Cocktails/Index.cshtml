@@ -1,29 +1,155 @@
 ﻿@model Shop.Models.Cocktails.CocktailsIndexViewModel
 
-<h1>Cocktails</h1>
-
-<!-- Search Form -->
-<form method="get" asp-controller="Cocktails" asp-action="Index">
-    <input type="text" name="search" placeholder="Search for a cocktail" value="@ViewContext.HttpContext.Request.Query["search"]" />
-    <button type="submit">Search</button>
-</form>
-
-<!-- Display Cocktails -->
-@if (Model.drinks.Any())
-{
-    foreach (var drink in Model.drinks)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Shop</title>
+</head>
+<body>
+    @if (!string.IsNullOrEmpty(ViewContext.HttpContext.Request.Query["search"]))
     {
-        <div class="cocktail">
-            <h2>@drink.strDrink</h2>
-            <img src="@drink.strDrinkThumb" alt="@drink.strDrink" />
-            <p>@drink.strCategory</p>
-            <p>@drink.strAlcoholic</p>
-            <p>@drink.strInstructions</p>
-            <!-- Add more fields as needed -->
+        <h1 class="mt-5 text-white">Found @Model.drinks.Count() Cocktails for "@ViewContext.HttpContext.Request.Query["search"]"</h1>
+    }
+
+    @if (Model.drinks.Any())
+    {
+        <div class="row mt-5">
+            @foreach (var drink in Model.drinks)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="cocktail-card d-flex flex-column">
+                        <img class="card-img-top" src="@drink.strDrinkThumb" alt="@drink.strDrink" />
+                        <div class="card-body">
+                            <h5 class="card-title">@drink.strDrink</h5>
+
+                            @if (!string.IsNullOrEmpty(drink.strDrinkAlternate))
+                            {
+                                <p class="card-text"><strong>Alternate Name:</strong> @drink.strDrinkAlternate</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strCategory))
+                            {
+                                <p class="card-text"><strong>Category:</strong> @drink.strCategory</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strAlcoholic))
+                            {
+                                <p class="card-text"><strong>Alcoholic:</strong> @drink.strAlcoholic</p>
+                            }
+
+
+                            @if (!string.IsNullOrEmpty(drink.strIBA))
+                            {
+                                <p class="card-text"><strong>IBA:</strong> @drink.strIBA</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strGlass))
+                            {
+                                <p class="card-text"><strong>Glass:</strong> @drink.strGlass</p>
+                            }
+
+                            <p><strong>Ingredients:</strong></p>
+                            @if (!string.IsNullOrEmpty(drink.strMeasure1))
+                            {
+                                <p class="card-text">@drink.strMeasure1 @drink.strIngredient1</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure2))
+                            {
+                                <p class="card-text">@drink.strMeasure2 @drink.strIngredient2</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure3))
+                            {
+                                <p class="card-text">@drink.strMeasure3 @drink.strIngredient3</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure4))
+                            {
+                                <p class="card-text">@drink.strMeasure4 @drink.strIngredient4</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure5))
+                            {
+                                <p class="card-text">@drink.strMeasure5 @drink.strIngredient5</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure6))
+                            {
+                                <p class="card-text">@drink.strMeasure6 @drink.strIngredient6</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure7))
+                            {
+                                <p class="card-text">@drink.strMeasure7 @drink.strIngredient7</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure8))
+                            {
+                                <p class="card-text">@drink.strMeasure8 @drink.strIngredient8</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure9))
+                            {
+                                <p class="card-text">@drink.strMeasure9 @drink.strIngredient9</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure10))
+                            {
+                                <p class="card-text">@drink.strMeasure10 @drink.strIngredient10</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure11))
+                            {
+                                <p class="card-text">@drink.strMeasure11 @drink.strIngredient11</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure12))
+                            {
+                                <p class="card-text">@drink.strMeasure12 @drink.strIngredient12</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure13))
+                            {
+                                <p class="card-text">@drink.strMeasure13 @drink.strIngredient13</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure14))
+                            {
+                                <p class="card-text">@drink.strMeasure14 @drink.strIngredient14</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strMeasure15))
+                            {
+                                <p class="card-text">@drink.strMeasure15 @drink.strIngredient15</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strInstructions))
+                            {
+                                <p class="card-text"><strong>Instructions:</strong> @drink.strInstructions</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strTags))
+                            {
+                                <p class="card-text"><strong>Tags:</strong> @drink.strTags</p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(drink.strVideo))
+                            {
+								<p class="card-text"><strong>Video:</strong> <a href="@drink.strVideo" class="text-white">@drink.strVideo</a></p>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     }
-}
-else
-{
-    <p>No cocktails found.</p>
-}
+@*     else
+    {
+        <p>No cocktails found.</p>
+    } *@
+</body>
+</html>

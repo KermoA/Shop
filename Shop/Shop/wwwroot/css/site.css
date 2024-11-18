@@ -342,7 +342,7 @@ body {
 
 .custom-search-box {
     background-color: rgba(255, 255, 255, 0.4);
-    color: rgb(0, 0, 0);
+    color: rgb(36, 33, 33);
     font-weight:bold;
     border: 2px solid #ccc;
     padding: 10px;
@@ -357,6 +357,22 @@ body {
         border-color: #007bff;
         outline: none;
     }
+
+    .custom-search-box::placeholder {
+        color: rgb(54, 50, 50);
+    }
+
+.cocktail-card {
+display: flex;
+flex-direction: column;
+height: 100%;
+background-color: rgba(255, 255, 255, 0.2);
+color: white;
+}
+
+.card-body {
+    flex-grow: 1;
+}
 
 
 

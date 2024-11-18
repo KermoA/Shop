@@ -23,13 +23,11 @@ namespace Shop.ApplicationServices.Services
                 {
                     string json = await client.DownloadStringTaskAsync(url);
 
-                    // Deserialize the response into CocktailRootDto
                     var root = JsonSerializer.Deserialize<CocktailRootDto>(json, new JsonSerializerOptions
                     {
-                        PropertyNameCaseInsensitive = true // Ensures case-insensitive matching for property names
+                        PropertyNameCaseInsensitive = true
                     });
 
-                    // Add the list of cocktails from the 'Drinks' property
                     if (root?.Drinks != null)
                     {
                         cocktailList.AddRange(root.Drinks);
@@ -37,12 +35,10 @@ namespace Shop.ApplicationServices.Services
                 }
                 catch (WebException webEx)
                 {
-                    // Handle HTTP or network-related errors
                     throw new Exception("An error occurred while fetching cocktails from the API", webEx);
                 }
                 catch (JsonException jsonEx)
                 {
-                    // Handle JSON parsing errors
                     throw new Exception("An error occurred while parsing the cocktail data", jsonEx);
                 }
             }
