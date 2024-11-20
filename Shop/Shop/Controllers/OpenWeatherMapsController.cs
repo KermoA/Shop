@@ -28,7 +28,7 @@ namespace Shop.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("City", "OpenWeatherMaps", new { city = model.CityName });
+                return RedirectToAction("City", "OpenWeatherMaps", new { city = model.Name });
             }
 
             return View(model);
@@ -38,18 +38,25 @@ namespace Shop.Controllers
         public IActionResult City(string city) 
         {
             OpenWeatherMapRootDto dto = new();
-            dto.CityName = city;
+            dto.Name = city;
 
             _openWeatherMapServices.OpenWeatherMapResult(dto);
 
-            OpenWeatherMapsViewModel vm = new();
+            OpenWeatherMapsViewModel vm = new OpenWeatherMapsViewModel
+            {
+                Name = dto.Name,
+                Temp = dto.Main.Temp,
+                FeelsLike = dto.Main.FeelsLike,
+                Pressure = dto.Main.Pressure,
+                Humidity = dto.Main.Humidity,
+                WindSpeed = dto.Wind.Speed,
+                WeatherConditions = dto.Weather.Select(w => new WeatherCondition
+                {
+                    Main = w.Main,
+                    Description = w.Description,
+                }).ToList(),
+            };
 
-            vm.CityName = dto.CityName;
-            vm.Temp = dto.Main.Temp;
-            vm.FeelsLike = dto.Main.FeelsLike;
-            vm.Humidity = dto.Main.Humidity;
-            vm.Pressure = dto.Main.Pressure;
-            vm.Speed = dto.Wind.Speed;
 
 
 

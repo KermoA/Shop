@@ -10,7 +10,7 @@ namespace Shop.ApplicationServices.Services
         public async Task<OpenWeatherMapRootDto> OpenWeatherMapResult(OpenWeatherMapRootDto dto)
         {
             string owmApiKey = "3c1c938c3acbb76dba4fd4ed28306c77";
-            string url = $"https://api.openweathermap.org/data/2.5/weather?q={dto.CityName}&appid={owmApiKey}&units=metric";
+            string url = $"https://api.openweathermap.org/data/2.5/weather?q={dto.Name}&appid={owmApiKey}&units=metric";
 
             using (WebClient client = new WebClient())
             {
@@ -19,6 +19,11 @@ namespace Shop.ApplicationServices.Services
                 OpenWeatherMapRootDto openWeatherMapResult = new JavaScriptSerializer().Deserialize<OpenWeatherMapRootDto>(json);
 
                 // Map all properties
+                dto.Id = openWeatherMapResult.Id;
+                dto.Name = openWeatherMapResult.Name;
+                dto.Timezone = openWeatherMapResult.Timezone;
+                dto.Dt = openWeatherMapResult.Dt;
+                dto.Cod = openWeatherMapResult.Cod;
                 dto.Clouds = openWeatherMapResult.Clouds;
                 dto.Coord = openWeatherMapResult.Coord;
                 dto.Main = openWeatherMapResult.Main;
@@ -26,10 +31,6 @@ namespace Shop.ApplicationServices.Services
                 dto.Wind = openWeatherMapResult.Wind;
                 dto.Weather = openWeatherMapResult.Weather;
                 dto.Sys = openWeatherMapResult.Sys;
-                dto.CityName = openWeatherMapResult.CityName;
-                dto.Timezone = openWeatherMapResult.Timezone;
-                dto.Dt = openWeatherMapResult.Dt;
-                dto.Cod = openWeatherMapResult.Cod;
             }
 
             return dto;
