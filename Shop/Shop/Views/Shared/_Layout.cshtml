@@ -184,9 +184,11 @@
                             <a class="nav-link text-white" asp-area="" asp-controller="Cocktails" asp-action="Index">Cocktails</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="AccuWeathers" asp-action="Index">Accu Weather</a>
+                            <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#forecastModal">Accu Weather</a>
                         </li>
-
+                                                <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="AccuWeathers" asp-action="Index">Accu</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -197,6 +199,27 @@
             @RenderBody()
         </main>
     </div>
+
+    <!-- Modal -->
+@{
+    var searchCityModel = ViewData["SearchCityModel"] as Shop.Models.AccuWeathers.AccuWeathersSearchViewModel;
+}
+
+<div class="modal" id="forecastModal" tabindex="-1" aria-labelledby="forecastModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-weather-search">
+                <form method="post" asp-controller="AccuWeathers" asp-action="SearchCity" class="d-flex w-100 p-3">
+                    <div class="form-group flex-grow-1 me-2">
+                        <input id="CityName" name="CityName" class="form-control" 
+                               value="@searchCityModel?.CityName" placeholder="Search Forecast of City" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-create">Search</button>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
 
     <footer class="footer-overlay footer text-muted">
         <div class="container text-center">
