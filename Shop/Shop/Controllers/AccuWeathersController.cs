@@ -45,6 +45,7 @@ namespace Shop.Controllers
 
             AccuWeatherViewModel vm = new();
 
+            vm.CityName = dto.CityName;
             vm.EffectiveDate = dto.EffectiveDate;
             vm.EffectiveEpochDate = dto.EffectiveEpochDate;
             vm.Severity = dto.Severity;
