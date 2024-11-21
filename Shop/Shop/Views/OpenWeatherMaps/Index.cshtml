@@ -16,11 +16,6 @@
             </div>
         }
 
-        <form asp-action="SearchCity" method="post" class="d-flex">
-            <input id="Name" name="Name" class="form-control" placeholder="Search current weather for location" />
-            <button type="submit" class="btn btn-primary ml-2">Search</button>
-        </form>
-
         @if (!string.IsNullOrWhiteSpace(Model?.Name))
         {
             <div class="card text-white bg-dark mt-3" style="max-width: 45rem;">

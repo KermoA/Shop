@@ -62,6 +62,8 @@
             bool showKindergartenCreateButton = false;
             bool showChuckNorrisJokeButton = false;
             bool showCocktailSearchForm = false;
+            bool showOpenWeatherMapSearchForm = false;
+            bool showAccuWeatherSearchForm = false;
             var controller = ViewContext.RouteData.Values["controller"]?.ToString();
             switch (controller)
             {
@@ -84,10 +86,12 @@
                 case "AccuWeathers":
                     bannerImage = "~/images/codingBanner.mp4";
                     isVideo = true;
+                    showAccuWeatherSearchForm = true;
                     break;
                 case "OpenWeatherMaps":
                     bannerImage = "~/images/codingBanner.mp4";
                     isVideo = true;
+                    showOpenWeatherMapSearchForm = true;
                     break;
                 case "ChuckNorrisJokes":
                     bannerImage = "~/images/chuckNorrisBanner.webp";
@@ -155,6 +159,26 @@
                     </div>
                 </form>
             }
+            @if (showOpenWeatherMapSearchForm)
+            {
+                <form asp-action="SearchCity" method="post" class="cocktail-search-form">
+                    <div class="d-flex">
+                        <input id="Name" name="Name" class="me-2 custom-search-box" placeholder="Search current weather" />
+                        <button type="submit" class="btn btn-create">Search</button>
+                    </div>
+
+                </form>
+            }
+            @if (showAccuWeatherSearchForm)
+            {
+                <form method="post" asp-controller="AccuWeathers" asp-action="SearchCity" class="cocktail-search-form">
+                    <div class="d-flex">
+                        <input id="CityName" name="CityName" class="me-2 custom-search-box"
+                                placeholder="Search daily forecast" />
+                        <button type="submit" class="btn btn-create">Search</button>
+                    </div>
+                </form>
+            }
         </div>
 
     </div>
@@ -163,19 +187,37 @@
             <div class="container-fluid">
                 <a class="navbar-brand text-white px-5" asp-area="" asp-controller="Home" asp-action="Index">Shop</a>
 
+
                     @{
+                        var searchOpenWeatherMapCityModel = ViewData["SearchCityModel"] as Shop.Models.OpenWeatherMaps.OpenWeatherMapsSearchViewModel;
+                        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+                    }
+
+                    @if (!string.Equals(currentController, "OpenWeatherMaps", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <form asp-controller="openWeatherMaps" asp-action="SearchCity" method="post" class="d-flex">
+                            <input id="Name" name="Name" class="form-control open-weather-input"
+                                   value="@searchOpenWeatherMapCityModel?.Name" placeholder="Search current weather for location" />
+                        @*                         <button type="submit" class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    </svg>
+                    </button> *@
+                        </form>
+                    }
+@*                     @{
                         var searchOpenWeatherMapCityModel = ViewData["SearchCityModel"] as Shop.Models.OpenWeatherMaps.OpenWeatherMapsSearchViewModel;
                     }
 
                     <form asp-controller="openWeatherMaps" asp-action="SearchCity" method="post" class="d-flex">
                         <input id="Name" name="Name" class="form-control open-weather-input"
                                value="@searchOpenWeatherMapCityModel?.Name" placeholder="Search current weather for location" />
-@*                         <button type="submit" class="btn">
+                        <button type="submit" class="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                             </svg>
-                        </button> *@
-                    </form>
+                        </button>
+                    </form> *@
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">

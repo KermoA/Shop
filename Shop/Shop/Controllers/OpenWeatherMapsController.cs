@@ -21,7 +21,6 @@ namespace Shop.Controllers
         {
             ViewData["Title"] = "OpenWeatherMap";
 
-            // Initialize the ViewModel
             OpenWeatherMapsIndexViewModel vm = new();
 
             if (!string.IsNullOrWhiteSpace(city))
@@ -30,10 +29,8 @@ namespace Shop.Controllers
 
                 _openWeatherMapServices.OpenWeatherMapResult(dto);
 
-                // Validate the API response
                 if (dto != null && dto.Main != null && dto.Weather != null && dto.Weather.Any())
                 {
-                    // Map the DTO to the ViewModel
                     vm = new OpenWeatherMapsIndexViewModel
                     {
                         Name = dto.Name,
@@ -63,7 +60,6 @@ namespace Shop.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Pass the city name to the Index action
                 return RedirectToAction("Index", new { city = model.Name });
             }
 
