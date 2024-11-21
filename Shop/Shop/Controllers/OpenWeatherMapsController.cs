@@ -17,10 +17,45 @@ namespace Shop.Controllers
             _openWeatherMapServices = openWeatherMapServices;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? city)
         {
             ViewData["Title"] = "OpenWeatherMap";
-            return View();
+
+            // Initialize the ViewModel
+            OpenWeatherMapsIndexViewModel vm = new();
+
+            if (!string.IsNullOrWhiteSpace(city))
+            {
+                OpenWeatherMapRootDto dto = new() { Name = city };
+
+                _openWeatherMapServices.OpenWeatherMapResult(dto);
+
+                // Validate the API response
+                if (dto != null && dto.Main != null && dto.Weather != null && dto.Weather.Any())
+                {
+                    // Map the DTO to the ViewModel
+                    vm = new OpenWeatherMapsIndexViewModel
+                    {
+                        Name = dto.Name,
+                        Temp = dto.Main.Temp,
+                        FeelsLike = dto.Main.FeelsLike,
+                        Pressure = dto.Main.Pressure,
+                        Humidity = dto.Main.Humidity,
+                        WindSpeed = dto.Wind.Speed,
+                        WeatherConditions = dto.Weather.Select(w => new WeatherCondition
+                        {
+                            Main = w.Main,
+                            Description = w.Description,
+                        }).ToList(),
+                    };
+                }
+                else
+                {
+                    TempData["Error"] = "No data found for the specified city. Please check the name and try again.";
+                }
+            }
+
+            return View(vm);
         }
 
         [HttpPost]
@@ -28,41 +63,12 @@ namespace Shop.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("City", "OpenWeatherMaps", new { city = model.Name });
+                // Pass the city name to the Index action
+                return RedirectToAction("Index", new { city = model.Name });
             }
 
-            return View(model);
-        }
-
-        [HttpGet]
-        public IActionResult City(string city) 
-        {
-            OpenWeatherMapRootDto dto = new();
-            dto.Name = city;
-
-            _openWeatherMapServices.OpenWeatherMapResult(dto);
-
-            OpenWeatherMapsViewModel vm = new OpenWeatherMapsViewModel
-            {
-                Name = dto.Name,
-                Temp = dto.Main.Temp,
-                FeelsLike = dto.Main.FeelsLike,
-                Pressure = dto.Main.Pressure,
-                Humidity = dto.Main.Humidity,
-                WindSpeed = dto.Wind.Speed,
-                WeatherConditions = dto.Weather.Select(w => new WeatherCondition
-                {
-                    Main = w.Main,
-                    Description = w.Description,
-                }).ToList(),
-            };
-
-
-
-
-
-
-            return View("City", vm);
+            TempData["Error"] = "Invalid input. Please try again.";
+            return RedirectToAction("Index");
         }
     }
 }

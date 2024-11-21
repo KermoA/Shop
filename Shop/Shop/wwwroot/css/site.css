@@ -396,6 +396,15 @@ color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.open-weather-input {
+    width: calc((21ch) + 2em);
+}
+
+.open-weather-input::placeholder {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
 
 
 

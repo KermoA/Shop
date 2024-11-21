@@ -1,4 +1,5 @@
 ﻿@model Shop.Models.OpenWeatherMaps.OpenWeatherMapsIndexViewModel
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,24 +8,35 @@
     <title>@ViewData["Title"]</title>
 </head>
 <body>
-    <h1 class="text-white mt-5">Search City</h1>
-    <div class="container text-white">
-        <form method="post">
-            <div class="container">
-                <div class="form-group col-md-offset-3 col-md-5">
-                    <h2>Search city forecast in a city</h2>
-                    <label asp-for="Name" style="font-family: Arial"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
+    <div class="container mt-5">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["Error"]
             </div>
-            <div class="container">
-                <div class="form-group col-md-offset-3 col-md-5">
-                    <button asp-controller="openWeatherMaps" asp-action="SearchCity" class="btn btn-create">Search</button>
-                </div>
-            </div>
-        </form>
-    </div>
+        }
 
+        <form asp-action="SearchCity" method="post" class="d-flex">
+            <input id="Name" name="Name" class="form-control" placeholder="Search current weather for location" />
+            <button type="submit" class="btn btn-primary ml-2">Search</button>
+        </form>
+
+        @if (!string.IsNullOrWhiteSpace(Model?.Name))
+        {
+            <div class="card text-white bg-dark mt-3" style="max-width: 45rem;">
+                <div class="card-header">
+                    <h5 class="card-title">Current forecast for @Model.Name (@DateTime.Now.ToString("dd/MM/yyyy"))</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Temperature:</strong> @Model.Temp °C</p>
+                    <p><strong>Feels Like:</strong> @Model.FeelsLike °C</p>
+                    <p><strong>Humidity:</strong> @Model.Humidity %</p>
+                    <p><strong>Pressure:</strong> @Model.Pressure hPa</p>
+                    <p><strong>Wind Speed:</strong> @Model.WindSpeed m/s</p>
+                    <p><strong>Weather Condition:</strong> @Model.WeatherConditions.FirstOrDefault()?.Main</p>
+                </div>
+            </div>
+        }
+    </div>
 </body>
 </html>
