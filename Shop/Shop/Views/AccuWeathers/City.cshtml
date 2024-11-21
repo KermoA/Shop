@@ -5,53 +5,53 @@
 }
 
 <div class="container mt-5">
-    <div class="card text-white bg-dark mb-3" style="max-width: 45rem;">
+    <div class="card weather-card" style="max-width: 45rem;">
         <div class="card-header">
-            <h5 class="card-title">@DateTime.Now.ToString("dd/MM/yyyy") Daily forecast for @Model.CityName</h5>
+            <h5 class="card-title">Daily forecast for @Model.CityName (@DateTime.Now.ToString("dd/MM/yyyy"))</h5>
         </div>
         <div class="card-body">
-
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Min Temp:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.TempMinValue °C</label>
+            <!-- Min Temp Row -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Min Temp:</strong> @Model.TempMinValue °C</p>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Max Temp:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.TempMaxValue °C</label>
+            <!-- Max Temp Row -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Max Temp:</strong> @Model.TempMaxValue °C</p>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Weather Description:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.Text</label>
+            <!-- Weather Description Row -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Weather Description:</strong> @Model.Text</p>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Severity:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.Severity</label>
+            <!-- Severity Row -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Severity:</strong> @Model.Severity</p>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Category:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.Category</label>
+            <!-- Category Row -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Category:</strong> @Model.Category</p>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Effective Date:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.EffectiveDate</label>
+            <!-- Effective Date Row -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Effective Date:</strong> @Model.EffectiveDate</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+

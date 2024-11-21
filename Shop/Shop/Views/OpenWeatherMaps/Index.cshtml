@@ -18,17 +18,35 @@
 
         @if (!string.IsNullOrWhiteSpace(Model?.Name))
         {
-            <div class="card text-white bg-dark mt-3" style="max-width: 45rem;">
+            <div class="card weather-card" style="max-width: 45rem;">
                 <div class="card-header">
                     <h5 class="card-title">Current forecast for @Model.Name (@DateTime.Now.ToString("dd/MM/yyyy"))</h5>
                 </div>
                 <div class="card-body">
-                    <p><strong>Temperature:</strong> @Model.Temp °C</p>
-                    <p><strong>Feels Like:</strong> @Model.FeelsLike °C</p>
-                    <p><strong>Humidity:</strong> @Model.Humidity %</p>
-                    <p><strong>Pressure:</strong> @Model.Pressure hPa</p>
-                    <p><strong>Wind Speed:</strong> @Model.WindSpeed m/s</p>
-                    <p><strong>Weather Condition:</strong> @Model.WeatherConditions.FirstOrDefault()?.Main</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Temperature:</strong> @Model.Temp °C</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Feels Like:</strong> @Model.FeelsLike °C</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Humidity:</strong> @Model.Humidity %</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Pressure:</strong> @Model.Pressure hPa</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Wind Speed:</strong> @Model.WindSpeed m/s</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Weather Condition:</strong> @Model.WeatherConditions.FirstOrDefault()?.Main</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
