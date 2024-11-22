@@ -43,6 +43,7 @@ namespace Shop.Controllers
                         {
                             Main = w.Main,
                             Description = w.Description,
+                            Icon = w.Icon,
                         }).ToList(),
                     };
                 }

@@ -450,6 +450,51 @@ color: white;
             margin-bottom: 0;
         }
 
+.open-weather-card {
+    background: rgba(0, 241, 241, 0.25);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    margin-top: 30px;
+}
+
+    .open-weather-card .card-header {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        text-align: center;
+        font-size: 1.8rem;
+        padding: 5px;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .open-weather-card .card-body {
+        color: #fff;
+        padding: 10px;
+    }
+
+    .open-weather-card p {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    .open-weather-card h5 {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .open-weather-card .row {
+        margin-bottom: 5px;
+    }
+
+    .open-weather-card .col-md-6 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .open-weather-card .col-md-6 p {
+            margin-bottom: 0;
+        }
+
 
 
 
