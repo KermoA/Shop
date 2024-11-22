@@ -5,50 +5,42 @@
 }
 
 <div class="container mt-5">
-    <div class="card weather-card" style="max-width: 45rem;">
+    <div class="card open-weather-card" style="max-width: 400px;">
         <div class="card-header">
-            <h5 class="card-title">Daily forecast for @Model.CityName (@DateTime.Now.ToString("dd/MM/yyyy"))</h5>
+            <h5 class="card-title">Daily Forecast</h5>
+                <p>@DateTime.Now.ToString("dd/MM/yyyy")</p>
         </div>
+
         <div class="card-body">
-            <!-- Min Temp Row -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <p><strong>Min Temp:</strong> @Model.TempMinValue °C</p>
+            <div class="row">
+                <div class="col-6 d-flex align-items-center justify-content-center">
+                    <p style="font-size: 20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                            style="fill: white;" width="20px" height="20px">
+                            <path d="m21.768,9h-2.35c-.397.983-.989,1.886-1.762,2.658l-.35.342h1.926l.507,3h-2.858l-.199-2.389-4.681,4.578-4.681-4.578-.199,2.389h-2.859l.507-3h1.926l-.323-.316c-.785-.784-1.384-1.696-1.786-2.684h-2.354L.021,22.092l-.021,1.908h24v-1.5l-2.232-13.5Zm-15.148,12h-3.372l.507-3h3.115l-.25,3Zm3.01,0l.25-3h4.24l.25,3h-4.74Zm7.75,0l-.25-3h3.115l.507,3h-3.371Zm-5.38-6.608l4.242-4.149c1.134-1.133,1.758-2.64,1.758-4.243s-.624-3.11-1.758-4.243c-1.134-1.133-2.641-1.757-4.242-1.757s-3.11.624-4.242,1.757c-1.134,1.133-1.758,2.64-1.758,4.243s.624,3.11,1.77,4.254l4.23,4.138Zm0-10.392c1.105,0,2,.895,2,2s-.895,2-2,2-2-.895-2-2,.895-2,2-2Z" />
+                        </svg>
+                            <strong>@Model.CityName</strong>
+                    </p>
+                </div>
+
+                <div class="col-6 d-flex align-items-center justify-content-center">
+                    <p style="font-size: 20px;"><strong>@Model.Category</strong></p>
                 </div>
             </div>
 
-            <!-- Max Temp Row -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <p><strong>Max Temp:</strong> @Model.TempMaxValue °C</p>
-                </div>
+            <div class="row text-center">
+                <p style="font-size: 16px;">@Model.Text</p>
             </div>
 
-            <!-- Weather Description Row -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <p><strong>Weather Description:</strong> @Model.Text</p>
+            <div class="row text-center">
+                <div class="col-6">
+                    <p style="font-size: 16px;"><strong>Min Temp</strong></p>
+                    <p style="font-size: 30px;"><strong>@Model.TempMinValue</strong> °C</p>
                 </div>
-            </div>
 
-            <!-- Severity Row -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <p><strong>Severity:</strong> @Model.Severity</p>
-                </div>
-            </div>
-
-            <!-- Category Row -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <p><strong>Category:</strong> @Model.Category</p>
-                </div>
-            </div>
-
-            <!-- Effective Date Row -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <p><strong>Effective Date:</strong> @Model.EffectiveDate</p>
+                <div class="col-6">
+                    <p style="font-size: 16px;"><strong>Max Temp</strong></p>
+                    <p style="font-size: 30px;"><strong>@Model.TempMaxValue</strong> °C</p>
                 </div>
             </div>
         </div>
