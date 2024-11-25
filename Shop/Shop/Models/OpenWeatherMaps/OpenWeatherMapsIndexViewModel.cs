@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
         public double Temp { get; set; }
-        public double FeelsLike { get; set; }
+        public double Feels_Like { get; set; }
         public double TempMin { get; set; }
         public double TempMax { get; set; }
         public int Pressure { get; set; }

@@ -35,7 +35,7 @@ namespace Shop.Controllers
                     {
                         Name = dto.Name,
                         Temp = dto.Main.Temp,
-                        FeelsLike = dto.Main.FeelsLike,
+                        Feels_Like = dto.Main.Feels_Like,
                         Pressure = dto.Main.Pressure,
                         Humidity = dto.Main.Humidity,
                         WindSpeed = dto.Wind.Speed,
