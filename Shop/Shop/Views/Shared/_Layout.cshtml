@@ -41,6 +41,9 @@
             case "Cocktails":
                 faviconPath = "/icons/cocktailIcon32.png";
                 break;
+            case "Emails":
+                faviconPath = "/icons/emailIcon32.png";
+                break;
             default:
                 faviconPath = "/icons/homeIcon32.png";
                 break;
@@ -101,6 +104,9 @@
                 case "Cocktails":
                     bannerImage = "~/images/cocktailBanner.jpg";
                     showCocktailSearchForm = true;
+                    break;
+                case "Emails":
+                    bannerImage = "~/images/emailBanner.jpg";
                     break;
                 default:
                     bannerImage = "~/images/defaultBanner.jpg";
@@ -235,6 +241,9 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#forecastModal">Accu Weather</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Emails" asp-action="Index">Email</a>
                         </li>
                     </ul>
                 </div>
