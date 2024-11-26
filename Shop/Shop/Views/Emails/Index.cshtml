@@ -31,7 +31,9 @@
 					<div class="form-group mb-3">
 						<textarea rows="5" asp-for="Body" class="form-control" placeholder="Message..."></textarea>
 					</div>
+					<input asp-for="Attachments" type="file" class="form-control mb-3" multiple />
 					<button asp-action="SendEmail" asp-controller="Emails" type="submit" class="btn btn-create w-100">Send Email</button>
+
 				</form>
 			</div>
 		</div>

@@ -13,23 +13,36 @@ namespace Shop.Controllers
 		{
 			_emailServices = emailServices;
 		}
+
 		public IActionResult Index()
 		{
-            ViewData["Title"] = "Contact Us";
+			ViewData["Title"] = "Contact Us";
 
-            return View();
+			return View();
 		}
+
 		[HttpPost]
-		public IActionResult SendEmail(EmailsIndexViewModel vm)
+		public async Task<IActionResult> SendEmail(EmailsIndexViewModel vm)
 		{
-			var dto = new EmailDto()
+			try
 			{
-				To = vm.To,
-				Subject = vm.Subject,
-				Body = vm.Body,
-			};
-			_emailServices.SendEmail(dto);
+				var dto = new EmailDto()
+				{
+					To = vm.To,
+					Subject = vm.Subject,
+					Body = vm.Body,
+					Attachments = vm.Attachments
+				};
+
+				_emailServices.SendEmail(dto);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Email sending failed: {ex.Message}");
+			}
+
 			return RedirectToAction(nameof(Index));
 		}
+
 	}
 }
