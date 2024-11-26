@@ -16,7 +16,7 @@ namespace Shop.Controllers
 
 		public IActionResult Index()
 		{
-			ViewData["Title"] = "Contact Us";
+			ViewData["Title"] = "Send Email";
 
 			return View();
 		}
