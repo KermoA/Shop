@@ -108,6 +108,9 @@
                 case "Emails":
                     bannerImage = "~/images/emailBanner.jpg";
                     break;
+                case "Accounts":
+                    bannerImage = "~/images/emailBanner.jpg";
+                    break;
                 default:
                     bannerImage = "~/images/defaultBanner.jpg";
                     break;
@@ -221,14 +224,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Spaceships" asp-action="Index">Spaceship</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Kindergartens" asp-action="Index">Kindergarten</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="RealEstates" asp-action="Index">Real Estate</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="entitiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                CRUD
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="entitiesDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Spaceships" asp-action="Index">Spaceships</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="RealEstates" asp-action="Index">Real Estates</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Kindergartens" asp-action="Index">Kindergartens</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="ChuckNorrisJokes" asp-action="Index">Chuck Norris Facts</a>
@@ -244,6 +254,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Emails" asp-action="Index">Email</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Accounts" asp-action="Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Accounts" asp-action="Login">Login</a>
                         </li>
                     </ul>
                 </div>

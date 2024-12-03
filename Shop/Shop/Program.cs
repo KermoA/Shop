@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Shop.ApplicationServices.Services;
+using Shop.Core.Domain;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
 using ShopTARge23.ApplicationServices.Services;
@@ -17,6 +19,20 @@ namespace ShopTARge23
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+
+			builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+			{
+				options.SignIn.RequireConfirmedAccount = true;
+				options.Password.RequiredLength = 3;
+
+				options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+				options.Lockout.MaxFailedAccessAttempts = 3;
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+			})
+				.AddEntityFrameworkStores<ShopContext>()
+				.AddDefaultTokenProviders()
+				.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
+				.AddDefaultUI();
 
 			builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
 			builder.Services.AddScoped<IFileServices, FileServices>();
