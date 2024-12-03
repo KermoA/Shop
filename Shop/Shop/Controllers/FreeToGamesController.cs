@@ -18,6 +18,7 @@ namespace Shop.Controllers
             _freeToGamesServices = freeToGamesServices;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 15, List<string> genres = null, List<string> platforms = null)
         {
             ViewData["Title"] = "Free Games";
