@@ -43,6 +43,8 @@ body {
         background-color: rgba(255, 255, 255, 0.2);
         border-bottom: 2px solid rgba(255, 215, 0, 0.8);
     }
+
+
 .banner-overlay-button {
     position: absolute;
     top: 25%;
@@ -508,6 +510,34 @@ input[data-autocompleted] {
     background-color: transparent !important;
 }
 
+.custom-dropdown .dropdown-menu {
+    background-color: #343a40;
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0;
+}
+
+.custom-dropdown .dropdown-item {
+    color: #f8f9fa;
+    padding: 10px 15px;
+    font-size: 14px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+    .custom-dropdown .dropdown-item:hover {
+        background-color: #495057;
+        color: #fff;
+
+.custom-dropdown .dropdown-toggle {
+    color: #f8f9fa;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+    .custom-dropdown .dropdown-toggle:hover {
+        color: #adb5bd;
+    }
 
 
 
