@@ -7,7 +7,8 @@
 </div>
 
 @model HomePageViewModel
-
+@if (User.Identity.IsAuthenticated)
+{
 <div class="container mt-5">
     <!-- Spaceships Cards -->
     <div class="container card p-3" style="background-color: rgba(255, 255, 255, 0.04);">
@@ -101,4 +102,12 @@
             }
         </div>
     </div>
-</div>
+    </div>
+}
+
+else
+{
+    <div>
+        <h1 class="text-white text-center mt-5">Login to see content</h1>
+    </div>
+}

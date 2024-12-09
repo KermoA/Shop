@@ -5,11 +5,10 @@ using Shop.ApplicationServices.Services;
 using Shop.Core.Domain;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
-using ShopTARge23.ApplicationServices.Services;
 
 
 
-namespace ShopTARge23
+namespace Shop
 {
 	public class Program
 	{
