@@ -227,12 +227,12 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end px-5">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
 
                         @if (User.Identity.IsAuthenticated)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
                             <li class="nav-item dropdown custom-dropdown">
                                 <a class="nav-link dropdown-toggle text-white" href="#" id="entitiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     CRUD
@@ -264,13 +264,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Emails" asp-action="Index">Email</a>
                             </li>
-                            <li class="nav-item">
-                                <div class="col text-white pe-2">
+                            <li class="nav-item ps-2">
+                                <div class="col text-white d-flex flex-column align-items-center justify-content-center">
                                     @if (user != null)
                                     {
-                                        <form asp-controller="Accounts" asp-action="Logout" method="post" style="display:inline;">
-                                            <p>@user.Name</p>
-                                            <button type="submit" class="btn btn-delete">Logout</button>
+                                        <form asp-controller="Accounts" asp-action="Logout" method="post">
+                                            <button type="submit" class="btn btn-delete w-100 mb-2">Logout</button>
+                                            <hr class="m-0" />
+                                            <p class="m-0 d-flex justify-content-center ps-2 pe-2">@user.Name</p>
                                         </form>
                                     }
                                 </div>
@@ -279,10 +280,26 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Accounts" asp-action="Register">Register</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="ChuckNorrisJokes" asp-action="Index">Chuck Norris Facts</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Accounts" asp-action="Login">Login</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="FreeToGames" asp-action="Index">Free Games</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Cocktails" asp-action="Index">Cocktails</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#forecastModal">Accu Weather</a>
+                            </li>
+                            <li class="nav-item ps-2 pe-2">
+                                <form asp-controller="Accounts" asp-action="Register" method="get">
+                                    <button type="submit" class="btn btn-update">Register</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-controller="Accounts" asp-action="Login" method="get">
+                                    <button type="submit" class="btn btn-create">Login</button>
+                                </form>
                             </li>
                         }
                     </ul>
