@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<Shop.Core.Domain.ApplicationUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -258,9 +265,15 @@
                                 <a class="nav-link text-white" asp-area="" asp-controller="Emails" asp-action="Index">Email</a>
                             </li>
                             <li class="nav-item">
-                                <form asp-controller="Accounts" asp-action="Logout" method="post" style="display:inline;">
-                                    <button type="submit" class="btn btn-delete">Logout</button>
-                                </form>
+                                <div class="col text-white pe-2">
+                                    @if (user != null)
+                                    {
+                                        <form asp-controller="Accounts" asp-action="Logout" method="post" style="display:inline;">
+                                            <p>@user.Name</p>
+                                            <button type="submit" class="btn btn-delete">Logout</button>
+                                        </form>
+                                    }
+                                </div>
                             </li>
                         }
                         else

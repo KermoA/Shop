@@ -36,6 +36,7 @@ namespace Shop.Controllers
                 var user = new ApplicationUser
                 {
                     UserName = vm.Email,
+                    Name = vm.Name,
                     Email = vm.Email,
                     City = vm.City,
                 };
