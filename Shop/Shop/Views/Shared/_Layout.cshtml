@@ -271,8 +271,17 @@
                                         <form asp-controller="Accounts" asp-action="Logout" method="post">
                                             <button type="submit" class="btn btn-delete w-100 mb-2">Logout</button>
                                             <hr class="m-0" />
-                                            <p class="m-0 d-flex justify-content-center ps-2 pe-2">@user.Name</p>
                                         </form>
+                                        <div class="nav-item dropdown custom-dropdown">
+                                            <a class="nav-link text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <p class="m-0 d-flex justify-content-center ps-2 pe-2">@user.Name</p>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                                <li>
+                                                    <a class="dropdown-item" asp-area="" asp-controller="Accounts" asp-action="ChangePassword">Change Password</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     }
                                 </div>
                             </li>
