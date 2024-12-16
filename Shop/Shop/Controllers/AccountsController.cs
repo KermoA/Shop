@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Core.Domain;
 using Shop.Models.Accounts;
+using Shop.Models.Emails;
 
 namespace Shop.Controllers
 {
@@ -10,15 +11,18 @@ namespace Shop.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ConfirmationEmail _emailHelper;
 
         public AccountsController
             (
                 UserManager<ApplicationUser> userManager,
-                SignInManager<ApplicationUser> signInManager
+                SignInManager<ApplicationUser> signInManager,
+                ConfirmationEmail emailHelper
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailHelper = emailHelper;
         }
 
         [HttpGet]
@@ -30,7 +34,6 @@ namespace Shop.Controllers
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel vm)
-
         {
             if (ModelState.IsValid)
             {
@@ -46,30 +49,36 @@ namespace Shop.Controllers
 
                 if (result.Succeeded)
                 {
+                    // Generate email confirmation token
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                    var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { userId = user.Id, token = token }, Request.Scheme);
+                    // Generate the confirmation link
+                    var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { token, email = user.Email }, Request.Scheme);
 
+                    // Send email using the EmailHelper
+                    bool emailSent = await _emailHelper.SendEmailAsync(user.Email, confirmationLink);
 
-                    if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    if (emailSent)
                     {
-                        return RedirectToAction("ListUsers", "Administrations");
+                        ViewBag.ErrorTitle = "Registration Successful";
+                        ViewBag.ErrorMessage = "Please check your email to confirm your account.";
+                        return View("RegistrationSuccess");
                     }
 
-                    ViewBag.ErrorTitle = "Registration succesful";
-                    ViewBag.ErrorMessage = "Before you can login, please confirm your email," +
-                        "by clicking on the confirmation link we have emailed you.";
-
+                    // Handle email sending failure
+                    ViewBag.ErrorTitle = "Registration Successful";
+                    ViewBag.ErrorMessage = "We could not send a confirmation email. Please contact support.";
                     return View("EmailError");
                 }
 
+                // Handle errors from user creation
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
             }
 
-            return View();
+            return View(vm);
         }
 
         [HttpGet]
@@ -128,30 +137,21 @@ namespace Shop.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
-            if (userId == null || token == null)
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(email))
             {
-                return RedirectToAction("Index", "Home");
+                return View("Error");
             }
 
-            var user = await _userManager.FindByIdAsync(userId);
-
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"The User ID {userId} is not valid";
-                return View("NotFound");
+                return View("Error");
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, token);
-
-            if (result.Succeeded)
-            {
-                return View();
-            }
-
-            ViewBag.ErrorTitle = "Email cannot be confirmed";
-            return View("Error");
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
         [HttpPost]

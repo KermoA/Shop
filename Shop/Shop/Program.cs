@@ -5,6 +5,7 @@ using Shop.ApplicationServices.Services;
 using Shop.Core.Domain;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
+using Shop.Models.Emails;
 
 
 
@@ -43,6 +44,7 @@ namespace Shop
 			builder.Services.AddScoped<ICocktailsServices, CocktailsServices>();
 			builder.Services.AddScoped<IOpenWeatherMapServices, OpenWeatherMapServices>();
 			builder.Services.AddScoped<IEmailServices, EmailServices>();
+            builder.Services.AddTransient<ConfirmationEmail>();
 
             builder.Services.AddDbContext<ShopContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
