@@ -1,6 +1,5 @@
 ﻿using System.Net.Mail;
 using System.Net;
-using Microsoft.Extensions.Configuration;
 
 namespace Shop.Models.Emails
 {
@@ -39,7 +38,6 @@ namespace Shop.Models.Emails
                     }
                     catch (Exception ex)
                     {
-                        // Log exception
                         return false;
                     }
                 }

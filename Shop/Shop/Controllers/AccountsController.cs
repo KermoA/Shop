@@ -11,18 +11,18 @@ namespace Shop.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ConfirmationEmail _emailHelper;
+        private readonly ConfirmationEmail _confirmationEmail;
 
         public AccountsController
             (
                 UserManager<ApplicationUser> userManager,
                 SignInManager<ApplicationUser> signInManager,
-                ConfirmationEmail emailHelper
+                ConfirmationEmail confirmationEmail
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailHelper = emailHelper;
+            _confirmationEmail = confirmationEmail;
         }
 
         [HttpGet]
@@ -56,7 +56,7 @@ namespace Shop.Controllers
                     var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { token, email = user.Email }, Request.Scheme);
 
                     // Send email using the EmailHelper
-                    bool emailSent = await _emailHelper.SendEmailAsync(user.Email, confirmationLink);
+                    bool emailSent = await _confirmationEmail.SendEmailAsync(user.Email, confirmationLink);
 
                     if (emailSent)
                     {
