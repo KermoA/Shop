@@ -49,13 +49,10 @@ namespace Shop.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Generate email confirmation token
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                    // Generate the confirmation link
                     var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { token, email = user.Email }, Request.Scheme);
 
-                    // Send email using the EmailHelper
                     bool emailSent = await _confirmationEmail.SendEmailAsync(user.Email, confirmationLink);
 
                     if (emailSent)
@@ -65,13 +62,11 @@ namespace Shop.Controllers
                         return View("RegistrationSuccess");
                     }
 
-                    // Handle email sending failure
                     ViewBag.ErrorTitle = "Registration Successful";
                     ViewBag.ErrorMessage = "We could not send a confirmation email. Please contact support.";
                     return View("EmailError");
                 }
 
-                // Handle errors from user creation
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);

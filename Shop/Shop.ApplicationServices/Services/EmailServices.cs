@@ -17,7 +17,7 @@ namespace Shop.ApplicationServices.Services
 		public void SendEmail(EmailDto dto)
 		{
 			var email = new MimeMessage();
-			email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
+			email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailSettings:SenderEmail").Value));
 			email.To.Add(MailboxAddress.Parse(dto.To));
 			email.Subject = dto.Subject;
 
@@ -42,8 +42,8 @@ namespace Shop.ApplicationServices.Services
 			email.Body = multipart;
 
 			using var smtp = new SmtpClient();
-			smtp.Connect(_config.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
-			smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
+			smtp.Connect(_config.GetSection("EmailSettings:SmtpHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
+			smtp.Authenticate(_config.GetSection("EmailSettings:SenderEmail").Value, _config.GetSection("EmailSettings:SenderPassword").Value);
 			smtp.Send(email);
 			smtp.Disconnect(true);
 		}
