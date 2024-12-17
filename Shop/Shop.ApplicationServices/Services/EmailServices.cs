@@ -14,11 +14,16 @@ namespace Shop.ApplicationServices.Services
 			_config = config;
 		}
 
-		public void SendEmail(EmailDto dto)
+		public async Task SendEmail(EmailDto dto)
 		{
 			var email = new MimeMessage();
 			email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailSettings:SenderEmail").Value));
-			email.To.Add(MailboxAddress.Parse(dto.To));
+
+			foreach (var recipient in dto.To)
+			{
+				email.To.Add(MailboxAddress.Parse(recipient));
+			}
+
 			email.Subject = dto.Subject;
 
 			var multipart = new Multipart("mixed");
@@ -42,10 +47,11 @@ namespace Shop.ApplicationServices.Services
 			email.Body = multipart;
 
 			using var smtp = new SmtpClient();
-			smtp.Connect(_config.GetSection("EmailSettings:SmtpHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
-			smtp.Authenticate(_config.GetSection("EmailSettings:SenderEmail").Value, _config.GetSection("EmailSettings:SenderPassword").Value);
-			smtp.Send(email);
-			smtp.Disconnect(true);
+			await smtp.ConnectAsync(_config.GetSection("EmailSettings:SmtpHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
+			await smtp.AuthenticateAsync(_config.GetSection("EmailSettings:SenderEmail").Value, _config.GetSection("EmailSettings:SenderPassword").Value);
+			await smtp.SendAsync(email);
+			await smtp.DisconnectAsync(true);
 		}
+
 	}
 }

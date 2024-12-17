@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+
 using Microsoft.AspNetCore.Mvc;
 using Shop.Core.Domain;
+using Shop.Core.Dto;
+using Shop.Core.ServiceInterface;
 using Shop.Models.Accounts;
 using Shop.Models.Emails;
 
@@ -12,17 +15,20 @@ namespace Shop.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ConfirmationEmail _confirmationEmail;
+        private readonly IEmailServices _emailServices;
 
         public AccountsController
             (
                 UserManager<ApplicationUser> userManager,
                 SignInManager<ApplicationUser> signInManager,
-                ConfirmationEmail confirmationEmail
+                ConfirmationEmail confirmationEmail,
+                IEmailServices emailServices
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _confirmationEmail = confirmationEmail;
+            _emailServices = emailServices;
         }
 
         [HttpGet]
@@ -163,26 +169,72 @@ namespace Shop.Controllers
             return View();
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if(ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user != null && await _userManager.IsEmailConfirmedAsync(user))
-                {
-                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    var passwordResetLink = Url.Action("ResetPassword", "Accounts", new { email = model.Email, token = token }, Request.Scheme);
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordModel)
+		{
+			if (!ModelState.IsValid)
+				return View(forgotPasswordModel);
 
-                    return View("ForgotPasswordConfirmation");
-                }
-                return View("ForgotPasswordConfirmation");
-            }
-            return View(model);
+			var user = await _userManager.FindByEmailAsync(forgotPasswordModel.Email);
+			if (user == null)
+				return RedirectToAction(nameof(ForgotPasswordConfirmation));
+
+			var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+			var callbackUrl = Url.Action(nameof(ResetPassword), "Accounts", new { token, email = user.Email }, Request.Scheme);
+
+			var emailDto = new EmailDto
+			{
+				To = new List<string> { user.Email },
+				Subject = "Reset Password",
+				Body = $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>."
+			};
+
+			await _emailServices.SendEmail(emailDto);
+			return RedirectToAction(nameof(ForgotPasswordConfirmation));
+		}
+
+
+		[HttpGet]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
         }
 
-        [HttpGet]
+		[HttpGet]
+		public IActionResult ResetPassword(string token, string email)
+		{
+			var model = new ResetPasswordViewModel { Token = token, Email = email };
+			return View(model);
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPasswordModel)
+		{
+			if (!ModelState.IsValid)
+				return View(resetPasswordModel);
+			var user = await _userManager.FindByEmailAsync(resetPasswordModel.Email);
+			if (user == null)
+				RedirectToAction(nameof(ResetPasswordConfirmation));
+			var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
+			if (!resetPassResult.Succeeded)
+			{
+				foreach (var error in resetPassResult.Errors)
+				{
+					ModelState.TryAddModelError(error.Code, error.Description);
+				}
+				return View();
+			}
+			return RedirectToAction(nameof(ResetPasswordConfirmation));
+		}
+
+		[HttpGet]
+		public IActionResult ResetPasswordConfirmation()
+		{
+			return View();
+		}
+
+		[HttpGet]
         public IActionResult ChangePassword()
         {
             return View();

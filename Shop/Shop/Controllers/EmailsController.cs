@@ -28,13 +28,15 @@ namespace Shop.Controllers
 			{
 				var dto = new EmailDto()
 				{
-					To = vm.To,
+					To = vm.To.Contains(",")
+						? vm.To.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(email => email.Trim()).ToList()
+						: new List<string> { vm.To.Trim() },
 					Subject = vm.Subject,
 					Body = vm.Body,
 					Attachments = vm.Attachments
 				};
 
-				_emailServices.SendEmail(dto);
+				await _emailServices.SendEmail(dto); // Ensure SendEmail is async
 			}
 			catch (Exception ex)
 			{

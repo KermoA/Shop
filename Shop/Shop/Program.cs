@@ -34,6 +34,9 @@ namespace Shop
 				.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
 				.AddDefaultUI();
 
+			builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
+				opt.TokenLifespan = TimeSpan.FromHours(2));
+
 			builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
 			builder.Services.AddScoped<IFileServices, FileServices>();
 			builder.Services.AddScoped<IKindergartensServices, KindergartensServices>();

@@ -1,4 +1,4 @@
-﻿using Shop.Models.RealEstates;
+﻿
 
 namespace Shop.Models.Kindergartens
 {

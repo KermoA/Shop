@@ -107,7 +107,7 @@
         if (confirm("Are you sure you want to remove this image?")) {
             const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
 
-            fetch(`/realEstates/RemoveImage`, {
+            fetch(`/cars/RemoveImage`, {
                 method: 'POST',
                 headers: {
                     'RequestVerificationToken': token,
