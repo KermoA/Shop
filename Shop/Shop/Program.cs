@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -38,23 +39,25 @@ namespace Shop
 				opt.TokenLifespan = TimeSpan.FromHours(2));
 
 			builder.Services.AddAuthentication()
-				.AddGoogle(options =>
+				.AddGoogle(googleOptions =>
 				{
-					options.ClientId = builder.Configuration["Authentication:Google:AppId"];
-					options.ClientSecret = builder.Configuration["Authentication:Google:AppId"];
+					googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+					googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 				})
-				//.AddMicrosoftAccount(microsoftOptions =>
-				//{
-				//	microsoftOptions.ClientId = "[Your Microsoft Client ID]";
-				//	microsoftOptions.ClientSecret = "[Your Microsoft Client Secret]";
-				//})
 				.AddFacebook(facebookOptions =>
 				{
 					facebookOptions.ClientId = builder.Configuration["Authentication:Facebook:AppId"];
 					facebookOptions.ClientSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+				})
+				.AddGitHub(githubOptions =>
+				{
+					githubOptions.ClientId = builder.Configuration["Authentication:GitHub:ClientId"];
+					githubOptions.ClientSecret = builder.Configuration["Authentication:GitHub:ClientSecret"];
+					githubOptions.Scope.Add("read:user");
+					githubOptions.Scope.Add("user:email");
 				});
 
-            builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
+			builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
 			builder.Services.AddScoped<IFileServices, FileServices>();
 			builder.Services.AddScoped<IKindergartensServices, KindergartensServices>();
             builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
