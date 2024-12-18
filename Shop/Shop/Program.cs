@@ -37,7 +37,24 @@ namespace Shop
 			builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
 				opt.TokenLifespan = TimeSpan.FromHours(2));
 
-			builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
+			builder.Services.AddAuthentication()
+				.AddGoogle(options =>
+				{
+					options.ClientId = builder.Configuration["Authentication:Google:AppId"];
+					options.ClientSecret = builder.Configuration["Authentication:Google:AppId"];
+				})
+				//.AddMicrosoftAccount(microsoftOptions =>
+				//{
+				//	microsoftOptions.ClientId = "[Your Microsoft Client ID]";
+				//	microsoftOptions.ClientSecret = "[Your Microsoft Client Secret]";
+				//})
+				.AddFacebook(facebookOptions =>
+				{
+					facebookOptions.ClientId = builder.Configuration["Authentication:Facebook:AppId"];
+					facebookOptions.ClientSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+				});
+
+            builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
 			builder.Services.AddScoped<IFileServices, FileServices>();
 			builder.Services.AddScoped<IKindergartensServices, KindergartensServices>();
             builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
