@@ -528,6 +528,7 @@ input[data-autocompleted] {
     .custom-dropdown .dropdown-item:hover {
         background-color: #495057;
         color: #fff;
+    }
 
 .custom-dropdown .dropdown-toggle {
     color: #f8f9fa;

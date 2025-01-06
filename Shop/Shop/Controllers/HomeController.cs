@@ -45,6 +45,11 @@ namespace Shop.Controllers
 			return View(viewModel);
 		}
 
+        public IActionResult Chat()
+        {
+            return View(); 
+        }
+
 		public IActionResult Privacy()
         {
             ViewData["Title"] = "Privacy Policy";

@@ -6,6 +6,7 @@ using Shop.ApplicationServices.Services;
 using Shop.Core.Domain;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
+using Shop.Hubs;
 using Shop.Models.Emails;
 
 
@@ -20,6 +21,8 @@ namespace Shop
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+
+			builder.Services.AddSignalR();
 
 			builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 			{
@@ -100,6 +103,7 @@ namespace Shop
 			app.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");
+			app.MapHub<ChatHub>("/chatHub");
 
 			app.Run();
 		}
