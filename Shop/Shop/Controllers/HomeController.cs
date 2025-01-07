@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Shop.ApplicationServices.Services;
 using Shop.Core.ServiceInterface;
+using Shop.Hubs;
 using Shop.Models;
 using System.Diagnostics;
 
@@ -13,13 +15,15 @@ namespace Shop.Controllers
 		private readonly IKindergartensServices _kindergartenService;
 		private readonly IRealEstateServices _realEstateService;
         private readonly IFileServices _fileService;
+        private readonly IHubContext<DeathlyHallowsHub> _deathlyHub;
 
 		public HomeController(
             ILogger<HomeController> logger,
 			ISpaceshipsServices spaceshipService,
 			IKindergartensServices kindergartenService,
 			IRealEstateServices realEstateService,
-            IFileServices fileService
+            IFileServices fileService,
+            IHubContext<DeathlyHallowsHub> deathlyHub
             )
         {
             _logger = logger;
@@ -27,6 +31,7 @@ namespace Shop.Controllers
 			_kindergartenService = kindergartenService;
 			_realEstateService = realEstateService;
             _fileService = fileService;
+            _deathlyHub = deathlyHub;
         }
 
 		public IActionResult Index()
@@ -44,6 +49,20 @@ namespace Shop.Controllers
 
 			return View(viewModel);
 		}
+
+        public async Task<IActionResult> DeathlyHallows(string type)
+        {
+            if (SD.DealthyHallowRace.ContainsKey(type))
+            {
+                SD.DealthyHallowRace[type]++;
+            }
+            await _deathlyHub.Clients.All.SendAsync("updateDealthyHallowCount",
+                SD.DealthyHallowRace[SD.Cloak],
+                SD.DealthyHallowRace[SD.Stone],
+                SD.DealthyHallowRace[SD.Wand]);
+
+            return Accepted();
+        }
 
         public IActionResult Chat()
         {

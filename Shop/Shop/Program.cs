@@ -104,6 +104,8 @@ namespace Shop
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");
 			app.MapHub<ChatHub>("/chatHub");
+			app.MapHub<UserHub>("/hubs/userCount");
+			app.MapHub<DeathlyHallowsHub>("hubs/deathyhallows");
 
 			app.Run();
 		}
